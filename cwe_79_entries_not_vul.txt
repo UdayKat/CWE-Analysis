@@ -1,0 +1,2315 @@
+Entry ID: 56260
+: 56260
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: PHP_FUNCTION(header_register_callback)
+{
+	zval *callback_func;
+	char *callback_name;
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &callback_func) == FAILURE) {
+		return;
+	}
+	
+	if (!zend_is_callable(callback_func, 0, &callback_name TSRMLS_CC)) {
+		efree(callback_name);
+		RETURN_FALSE;
+	}
+
+	efree(callback_name);
+
+	if (SG(callback_func)) {
+		zval_ptr_dtor(&SG(callback_func));
+		SG(fci_cache) = empty_fcall_info_cache;
+	}
+
+	SG(callback_func) = callback_func;
+
+	Z_ADDREF_P(SG(callback_func));
+
+	RETURN_TRUE;
+}
+
+func_before: PHP_FUNCTION(header_register_callback)
+{
+	zval *callback_func;
+	char *callback_name;
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &callback_func) == FAILURE) {
+		return;
+	}
+	
+	if (!zend_is_callable(callback_func, 0, &callback_name TSRMLS_CC)) {
+		efree(callback_name);
+		RETURN_FALSE;
+	}
+
+	efree(callback_name);
+
+	if (SG(callback_func)) {
+		zval_ptr_dtor(&SG(callback_func));
+		SG(fci_cache) = empty_fcall_info_cache;
+	}
+
+	SG(callback_func) = callback_func;
+
+	Z_ADDREF_P(SG(callback_func));
+
+	RETURN_TRUE;
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: PHP_FUNCTION(header_register_callback)
+{
+	zval *callback_func;
+	char *callback_name;
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "z", &callback_func) == FAILURE) {
+		return;
+	}
+	
+	if (!zend_is_callable(callback_func, 0, &callback_name TSRMLS_CC)) {
+		efree(callback_name);
+		RETURN_FALSE;
+	}
+
+	efree(callback_name);
+
+	if (SG(callback_func)) {
+		zval_ptr_dtor(&SG(callback_func));
+		SG(fci_cache) = empty_fcall_info_cache;
+	}
+
+	SG(callback_func) = callback_func;
+
+	Z_ADDREF_P(SG(callback_func));
+
+	RETURN_TRUE;
+}
+
+
+========================================
+
+Entry ID: 56261
+: 56261
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API SAPI_POST_READER_FUNC(sapi_read_standard_form_data)
+{
+	int read_bytes;
+	int allocated_bytes=SAPI_POST_BLOCK_SIZE+1;
+
+	if ((SG(post_max_size) > 0) && (SG(request_info).content_length > SG(post_max_size))) {
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "POST Content-Length of %ld bytes exceeds the limit of %ld bytes",
+					SG(request_info).content_length, SG(post_max_size));
+		return;
+	}
+	SG(request_info).post_data = emalloc(allocated_bytes);
+
+	for (;;) {
+		read_bytes = sapi_module.read_post(SG(request_info).post_data+SG(read_post_bytes), SAPI_POST_BLOCK_SIZE TSRMLS_CC);
+		if (read_bytes<=0) {
+			break;
+		}
+		SG(read_post_bytes) += read_bytes;
+		if ((SG(post_max_size) > 0) && (SG(read_post_bytes) > SG(post_max_size))) {
+			php_error_docref(NULL TSRMLS_CC, E_WARNING, "Actual POST length does not match Content-Length, and exceeds %ld bytes", SG(post_max_size));
+			break;
+		}
+		if (read_bytes < SAPI_POST_BLOCK_SIZE) {
+			break;
+		}
+		if (SG(read_post_bytes)+SAPI_POST_BLOCK_SIZE >= allocated_bytes) {
+			allocated_bytes = SG(read_post_bytes)+SAPI_POST_BLOCK_SIZE+1;
+			SG(request_info).post_data = erealloc(SG(request_info).post_data, allocated_bytes);
+		}
+	}
+	SG(request_info).post_data[SG(read_post_bytes)] = 0;  /* terminating NULL */
+	SG(request_info).post_data_length = SG(read_post_bytes);
+}
+
+func_before: SAPI_API SAPI_POST_READER_FUNC(sapi_read_standard_form_data)
+{
+	int read_bytes;
+	int allocated_bytes=SAPI_POST_BLOCK_SIZE+1;
+
+	if ((SG(post_max_size) > 0) && (SG(request_info).content_length > SG(post_max_size))) {
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "POST Content-Length of %ld bytes exceeds the limit of %ld bytes",
+					SG(request_info).content_length, SG(post_max_size));
+		return;
+	}
+	SG(request_info).post_data = emalloc(allocated_bytes);
+
+	for (;;) {
+		read_bytes = sapi_module.read_post(SG(request_info).post_data+SG(read_post_bytes), SAPI_POST_BLOCK_SIZE TSRMLS_CC);
+		if (read_bytes<=0) {
+			break;
+		}
+		SG(read_post_bytes) += read_bytes;
+		if ((SG(post_max_size) > 0) && (SG(read_post_bytes) > SG(post_max_size))) {
+			php_error_docref(NULL TSRMLS_CC, E_WARNING, "Actual POST length does not match Content-Length, and exceeds %ld bytes", SG(post_max_size));
+			break;
+		}
+		if (read_bytes < SAPI_POST_BLOCK_SIZE) {
+			break;
+		}
+		if (SG(read_post_bytes)+SAPI_POST_BLOCK_SIZE >= allocated_bytes) {
+			allocated_bytes = SG(read_post_bytes)+SAPI_POST_BLOCK_SIZE+1;
+			SG(request_info).post_data = erealloc(SG(request_info).post_data, allocated_bytes);
+		}
+	}
+	SG(request_info).post_data[SG(read_post_bytes)] = 0;  /* terminating NULL */
+	SG(request_info).post_data_length = SG(read_post_bytes);
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API SAPI_POST_READER_FUNC(sapi_read_standard_form_data)
+{
+	int read_bytes;
+	int allocated_bytes=SAPI_POST_BLOCK_SIZE+1;
+
+	if ((SG(post_max_size) > 0) && (SG(request_info).content_length > SG(post_max_size))) {
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "POST Content-Length of %ld bytes exceeds the limit of %ld bytes",
+					SG(request_info).content_length, SG(post_max_size));
+		return;
+	}
+	SG(request_info).post_data = emalloc(allocated_bytes);
+
+	for (;;) {
+		read_bytes = sapi_module.read_post(SG(request_info).post_data+SG(read_post_bytes), SAPI_POST_BLOCK_SIZE TSRMLS_CC);
+		if (read_bytes<=0) {
+			break;
+		}
+		SG(read_post_bytes) += read_bytes;
+		if ((SG(post_max_size) > 0) && (SG(read_post_bytes) > SG(post_max_size))) {
+			php_error_docref(NULL TSRMLS_CC, E_WARNING, "Actual POST length does not match Content-Length, and exceeds %ld bytes", SG(post_max_size));
+			break;
+		}
+		if (read_bytes < SAPI_POST_BLOCK_SIZE) {
+			break;
+		}
+		if (SG(read_post_bytes)+SAPI_POST_BLOCK_SIZE >= allocated_bytes) {
+			allocated_bytes = SG(read_post_bytes)+SAPI_POST_BLOCK_SIZE+1;
+			SG(request_info).post_data = erealloc(SG(request_info).post_data, allocated_bytes);
+		}
+	}
+	SG(request_info).post_data[SG(read_post_bytes)] = 0;  /* terminating NULL */
+	SG(request_info).post_data_length = SG(read_post_bytes);
+}
+
+
+========================================
+
+Entry ID: 56262
+: 56262
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: static inline char *get_default_content_type(uint prefix_len, uint *len TSRMLS_DC)
+{
+	char *mimetype, *charset, *content_type;
+	uint mimetype_len, charset_len;
+
+	if (SG(default_mimetype)) {
+		mimetype = SG(default_mimetype);
+		mimetype_len = strlen(SG(default_mimetype));
+	} else {
+		mimetype = SAPI_DEFAULT_MIMETYPE;
+		mimetype_len = sizeof(SAPI_DEFAULT_MIMETYPE) - 1;
+	}
+	if (SG(default_charset)) {
+		charset = SG(default_charset);
+		charset_len = strlen(SG(default_charset));
+	} else {
+		charset = SAPI_DEFAULT_CHARSET;
+		charset_len = sizeof(SAPI_DEFAULT_CHARSET) - 1;
+	}
+
+	if (*charset && strncasecmp(mimetype, "text/", 5) == 0) {
+		char *p;
+
+		*len = prefix_len + mimetype_len + sizeof("; charset=") - 1 + charset_len;
+		content_type = (char*)emalloc(*len + 1);
+		p = content_type + prefix_len;
+		memcpy(p, mimetype, mimetype_len);
+		p += mimetype_len;
+		memcpy(p, "; charset=", sizeof("; charset=") - 1);
+		p += sizeof("; charset=") - 1;
+		memcpy(p, charset, charset_len + 1);
+	} else {
+		*len = prefix_len + mimetype_len;
+		content_type = (char*)emalloc(*len + 1);
+		memcpy(content_type + prefix_len, mimetype, mimetype_len + 1);
+	}
+	return content_type;
+}
+
+func_before: static inline char *get_default_content_type(uint prefix_len, uint *len TSRMLS_DC)
+{
+	char *mimetype, *charset, *content_type;
+	uint mimetype_len, charset_len;
+
+	if (SG(default_mimetype)) {
+		mimetype = SG(default_mimetype);
+		mimetype_len = strlen(SG(default_mimetype));
+	} else {
+		mimetype = SAPI_DEFAULT_MIMETYPE;
+		mimetype_len = sizeof(SAPI_DEFAULT_MIMETYPE) - 1;
+	}
+	if (SG(default_charset)) {
+		charset = SG(default_charset);
+		charset_len = strlen(SG(default_charset));
+	} else {
+		charset = SAPI_DEFAULT_CHARSET;
+		charset_len = sizeof(SAPI_DEFAULT_CHARSET) - 1;
+	}
+
+	if (*charset && strncasecmp(mimetype, "text/", 5) == 0) {
+		char *p;
+
+		*len = prefix_len + mimetype_len + sizeof("; charset=") - 1 + charset_len;
+		content_type = (char*)emalloc(*len + 1);
+		p = content_type + prefix_len;
+		memcpy(p, mimetype, mimetype_len);
+		p += mimetype_len;
+		memcpy(p, "; charset=", sizeof("; charset=") - 1);
+		p += sizeof("; charset=") - 1;
+		memcpy(p, charset, charset_len + 1);
+	} else {
+		*len = prefix_len + mimetype_len;
+		content_type = (char*)emalloc(*len + 1);
+		memcpy(content_type + prefix_len, mimetype, mimetype_len + 1);
+	}
+	return content_type;
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: static inline char *get_default_content_type(uint prefix_len, uint *len TSRMLS_DC)
+{
+	char *mimetype, *charset, *content_type;
+	uint mimetype_len, charset_len;
+
+	if (SG(default_mimetype)) {
+		mimetype = SG(default_mimetype);
+		mimetype_len = strlen(SG(default_mimetype));
+	} else {
+		mimetype = SAPI_DEFAULT_MIMETYPE;
+		mimetype_len = sizeof(SAPI_DEFAULT_MIMETYPE) - 1;
+	}
+	if (SG(default_charset)) {
+		charset = SG(default_charset);
+		charset_len = strlen(SG(default_charset));
+	} else {
+		charset = SAPI_DEFAULT_CHARSET;
+		charset_len = sizeof(SAPI_DEFAULT_CHARSET) - 1;
+	}
+
+	if (*charset && strncasecmp(mimetype, "text/", 5) == 0) {
+		char *p;
+
+		*len = prefix_len + mimetype_len + sizeof("; charset=") - 1 + charset_len;
+		content_type = (char*)emalloc(*len + 1);
+		p = content_type + prefix_len;
+		memcpy(p, mimetype, mimetype_len);
+		p += mimetype_len;
+		memcpy(p, "; charset=", sizeof("; charset=") - 1);
+		p += sizeof("; charset=") - 1;
+		memcpy(p, charset, charset_len + 1);
+	} else {
+		*len = prefix_len + mimetype_len;
+		content_type = (char*)emalloc(*len + 1);
+		memcpy(content_type + prefix_len, mimetype, mimetype_len + 1);
+	}
+	return content_type;
+}
+
+
+========================================
+
+Entry ID: 56263
+: 56263
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API void sapi_activate(TSRMLS_D)
+{
+	zend_llist_init(&SG(sapi_headers).headers, sizeof(sapi_header_struct), (void (*)(void *)) sapi_free_header, 0);
+	SG(sapi_headers).send_default_content_type = 1;
+
+	/*
+	SG(sapi_headers).http_response_code = 200;
+	*/
+	SG(sapi_headers).http_status_line = NULL;
+	SG(sapi_headers).mimetype = NULL;
+	SG(headers_sent) = 0;
+	SG(callback_run) = 0;
+	SG(callback_func) = NULL;
+	SG(read_post_bytes) = 0;
+	SG(request_info).post_data = NULL;
+	SG(request_info).raw_post_data = NULL;
+	SG(request_info).current_user = NULL;
+	SG(request_info).current_user_length = 0;
+	SG(request_info).no_headers = 0;
+	SG(request_info).post_entry = NULL;
+	SG(request_info).proto_num = 1000; /* Default to HTTP 1.0 */
+	SG(global_request_time) = 0;
+
+	/* It's possible to override this general case in the activate() callback, if necessary. */
+	if (SG(request_info).request_method && !strcmp(SG(request_info).request_method, "HEAD")) {
+		SG(request_info).headers_only = 1;
+	} else {
+		SG(request_info).headers_only = 0;
+	}
+	SG(rfc1867_uploaded_files) = NULL;
+
+	/* Handle request method */
+	if (SG(server_context)) {
+		if (PG(enable_post_data_reading) && SG(request_info).request_method) {
+			if (SG(request_info).content_type && !strcmp(SG(request_info).request_method, "POST")) {
+				/* HTTP POST may contain form data to be processed into variables
+				 * depending on given content type */
+				sapi_read_post_data(TSRMLS_C);
+			} else {
+				/* Any other method with content payload will fill $HTTP_RAW_POST_DATA 
+				 * if it is enabled by always_populate_raw_post_data. 
+				 * It's up to the webserver to decide whether to allow a method or not. */
+				SG(request_info).content_type_dup = NULL;
+				if (sapi_module.default_post_reader) {
+					sapi_module.default_post_reader(TSRMLS_C);
+				}
+			}
+		} else {
+			SG(request_info).content_type_dup = NULL;
+		}
+
+		/* Cookies */
+		SG(request_info).cookie_data = sapi_module.read_cookies(TSRMLS_C);
+
+		if (sapi_module.activate) {
+			sapi_module.activate(TSRMLS_C);
+		}
+	}
+	if (sapi_module.input_filter_init) {
+		sapi_module.input_filter_init(TSRMLS_C);
+	}
+}
+
+func_before: SAPI_API void sapi_activate(TSRMLS_D)
+{
+	zend_llist_init(&SG(sapi_headers).headers, sizeof(sapi_header_struct), (void (*)(void *)) sapi_free_header, 0);
+	SG(sapi_headers).send_default_content_type = 1;
+
+	/*
+	SG(sapi_headers).http_response_code = 200;
+	*/
+	SG(sapi_headers).http_status_line = NULL;
+	SG(sapi_headers).mimetype = NULL;
+	SG(headers_sent) = 0;
+	SG(callback_run) = 0;
+	SG(callback_func) = NULL;
+	SG(read_post_bytes) = 0;
+	SG(request_info).post_data = NULL;
+	SG(request_info).raw_post_data = NULL;
+	SG(request_info).current_user = NULL;
+	SG(request_info).current_user_length = 0;
+	SG(request_info).no_headers = 0;
+	SG(request_info).post_entry = NULL;
+	SG(request_info).proto_num = 1000; /* Default to HTTP 1.0 */
+	SG(global_request_time) = 0;
+
+	/* It's possible to override this general case in the activate() callback, if necessary. */
+	if (SG(request_info).request_method && !strcmp(SG(request_info).request_method, "HEAD")) {
+		SG(request_info).headers_only = 1;
+	} else {
+		SG(request_info).headers_only = 0;
+	}
+	SG(rfc1867_uploaded_files) = NULL;
+
+	/* Handle request method */
+	if (SG(server_context)) {
+		if (PG(enable_post_data_reading) && SG(request_info).request_method) {
+			if (SG(request_info).content_type && !strcmp(SG(request_info).request_method, "POST")) {
+				/* HTTP POST may contain form data to be processed into variables
+				 * depending on given content type */
+				sapi_read_post_data(TSRMLS_C);
+			} else {
+				/* Any other method with content payload will fill $HTTP_RAW_POST_DATA 
+				 * if it is enabled by always_populate_raw_post_data. 
+				 * It's up to the webserver to decide whether to allow a method or not. */
+				SG(request_info).content_type_dup = NULL;
+				if (sapi_module.default_post_reader) {
+					sapi_module.default_post_reader(TSRMLS_C);
+				}
+			}
+		} else {
+			SG(request_info).content_type_dup = NULL;
+		}
+
+		/* Cookies */
+		SG(request_info).cookie_data = sapi_module.read_cookies(TSRMLS_C);
+
+		if (sapi_module.activate) {
+			sapi_module.activate(TSRMLS_C);
+		}
+	}
+	if (sapi_module.input_filter_init) {
+		sapi_module.input_filter_init(TSRMLS_C);
+	}
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API void sapi_activate(TSRMLS_D)
+{
+	zend_llist_init(&SG(sapi_headers).headers, sizeof(sapi_header_struct), (void (*)(void *)) sapi_free_header, 0);
+	SG(sapi_headers).send_default_content_type = 1;
+
+	/*
+	SG(sapi_headers).http_response_code = 200;
+	*/
+	SG(sapi_headers).http_status_line = NULL;
+	SG(sapi_headers).mimetype = NULL;
+	SG(headers_sent) = 0;
+	SG(callback_run) = 0;
+	SG(callback_func) = NULL;
+	SG(read_post_bytes) = 0;
+	SG(request_info).post_data = NULL;
+	SG(request_info).raw_post_data = NULL;
+	SG(request_info).current_user = NULL;
+	SG(request_info).current_user_length = 0;
+	SG(request_info).no_headers = 0;
+	SG(request_info).post_entry = NULL;
+	SG(request_info).proto_num = 1000; /* Default to HTTP 1.0 */
+	SG(global_request_time) = 0;
+
+	/* It's possible to override this general case in the activate() callback, if necessary. */
+	if (SG(request_info).request_method && !strcmp(SG(request_info).request_method, "HEAD")) {
+		SG(request_info).headers_only = 1;
+	} else {
+		SG(request_info).headers_only = 0;
+	}
+	SG(rfc1867_uploaded_files) = NULL;
+
+	/* Handle request method */
+	if (SG(server_context)) {
+		if (PG(enable_post_data_reading) && SG(request_info).request_method) {
+			if (SG(request_info).content_type && !strcmp(SG(request_info).request_method, "POST")) {
+				/* HTTP POST may contain form data to be processed into variables
+				 * depending on given content type */
+				sapi_read_post_data(TSRMLS_C);
+			} else {
+				/* Any other method with content payload will fill $HTTP_RAW_POST_DATA 
+				 * if it is enabled by always_populate_raw_post_data. 
+				 * It's up to the webserver to decide whether to allow a method or not. */
+				SG(request_info).content_type_dup = NULL;
+				if (sapi_module.default_post_reader) {
+					sapi_module.default_post_reader(TSRMLS_C);
+				}
+			}
+		} else {
+			SG(request_info).content_type_dup = NULL;
+		}
+
+		/* Cookies */
+		SG(request_info).cookie_data = sapi_module.read_cookies(TSRMLS_C);
+
+		if (sapi_module.activate) {
+			sapi_module.activate(TSRMLS_C);
+		}
+	}
+	if (sapi_module.input_filter_init) {
+		sapi_module.input_filter_init(TSRMLS_C);
+	}
+}
+
+
+========================================
+
+Entry ID: 56264
+: 56264
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API void sapi_activate_headers_only(TSRMLS_D)
+{
+	if (SG(request_info).headers_read == 1)
+		return;
+	SG(request_info).headers_read = 1;
+	zend_llist_init(&SG(sapi_headers).headers, sizeof(sapi_header_struct), 
+			(void (*)(void *)) sapi_free_header, 0);
+	SG(sapi_headers).send_default_content_type = 1;
+
+	/* SG(sapi_headers).http_response_code = 200; */ 
+	SG(sapi_headers).http_status_line = NULL;
+	SG(sapi_headers).mimetype = NULL;
+	SG(read_post_bytes) = 0;
+	SG(request_info).post_data = NULL;
+	SG(request_info).raw_post_data = NULL;
+	SG(request_info).current_user = NULL;
+	SG(request_info).current_user_length = 0;
+	SG(request_info).no_headers = 0;
+	SG(request_info).post_entry = NULL;
+	SG(global_request_time) = 0;
+
+	/*
+	 * It's possible to override this general case in the activate() callback, 
+	 * if necessary.
+	 */
+	if (SG(request_info).request_method && !strcmp(SG(request_info).request_method, "HEAD")) {
+		SG(request_info).headers_only = 1;
+	} else {
+		SG(request_info).headers_only = 0;
+	}
+	if (SG(server_context)) {
+		SG(request_info).cookie_data = sapi_module.read_cookies(TSRMLS_C);
+		if (sapi_module.activate) {
+			sapi_module.activate(TSRMLS_C);
+		}
+	}
+	if (sapi_module.input_filter_init ) {
+		sapi_module.input_filter_init(TSRMLS_C);
+	}
+}
+
+func_before: SAPI_API void sapi_activate_headers_only(TSRMLS_D)
+{
+	if (SG(request_info).headers_read == 1)
+		return;
+	SG(request_info).headers_read = 1;
+	zend_llist_init(&SG(sapi_headers).headers, sizeof(sapi_header_struct), 
+			(void (*)(void *)) sapi_free_header, 0);
+	SG(sapi_headers).send_default_content_type = 1;
+
+	/* SG(sapi_headers).http_response_code = 200; */ 
+	SG(sapi_headers).http_status_line = NULL;
+	SG(sapi_headers).mimetype = NULL;
+	SG(read_post_bytes) = 0;
+	SG(request_info).post_data = NULL;
+	SG(request_info).raw_post_data = NULL;
+	SG(request_info).current_user = NULL;
+	SG(request_info).current_user_length = 0;
+	SG(request_info).no_headers = 0;
+	SG(request_info).post_entry = NULL;
+	SG(global_request_time) = 0;
+
+	/*
+	 * It's possible to override this general case in the activate() callback, 
+	 * if necessary.
+	 */
+	if (SG(request_info).request_method && !strcmp(SG(request_info).request_method, "HEAD")) {
+		SG(request_info).headers_only = 1;
+	} else {
+		SG(request_info).headers_only = 0;
+	}
+	if (SG(server_context)) {
+		SG(request_info).cookie_data = sapi_module.read_cookies(TSRMLS_C);
+		if (sapi_module.activate) {
+			sapi_module.activate(TSRMLS_C);
+		}
+	}
+	if (sapi_module.input_filter_init ) {
+		sapi_module.input_filter_init(TSRMLS_C);
+	}
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API void sapi_activate_headers_only(TSRMLS_D)
+{
+	if (SG(request_info).headers_read == 1)
+		return;
+	SG(request_info).headers_read = 1;
+	zend_llist_init(&SG(sapi_headers).headers, sizeof(sapi_header_struct), 
+			(void (*)(void *)) sapi_free_header, 0);
+	SG(sapi_headers).send_default_content_type = 1;
+
+	/* SG(sapi_headers).http_response_code = 200; */ 
+	SG(sapi_headers).http_status_line = NULL;
+	SG(sapi_headers).mimetype = NULL;
+	SG(read_post_bytes) = 0;
+	SG(request_info).post_data = NULL;
+	SG(request_info).raw_post_data = NULL;
+	SG(request_info).current_user = NULL;
+	SG(request_info).current_user_length = 0;
+	SG(request_info).no_headers = 0;
+	SG(request_info).post_entry = NULL;
+	SG(global_request_time) = 0;
+
+	/*
+	 * It's possible to override this general case in the activate() callback, 
+	 * if necessary.
+	 */
+	if (SG(request_info).request_method && !strcmp(SG(request_info).request_method, "HEAD")) {
+		SG(request_info).headers_only = 1;
+	} else {
+		SG(request_info).headers_only = 0;
+	}
+	if (SG(server_context)) {
+		SG(request_info).cookie_data = sapi_module.read_cookies(TSRMLS_C);
+		if (sapi_module.activate) {
+			sapi_module.activate(TSRMLS_C);
+		}
+	}
+	if (sapi_module.input_filter_init ) {
+		sapi_module.input_filter_init(TSRMLS_C);
+	}
+}
+
+
+========================================
+
+Entry ID: 56265
+: 56265
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API int sapi_add_header_ex(char *header_line, uint header_line_len, zend_bool duplicate, zend_bool replace TSRMLS_DC)
+{
+	sapi_header_line ctr = {0};
+	int r;
+	
+	ctr.line = header_line;
+	ctr.line_len = header_line_len;
+
+	r = sapi_header_op(replace ? SAPI_HEADER_REPLACE : SAPI_HEADER_ADD,
+			&ctr TSRMLS_CC);
+
+	if (!duplicate)
+		efree(header_line);
+
+	return r;
+}
+
+func_before: SAPI_API int sapi_add_header_ex(char *header_line, uint header_line_len, zend_bool duplicate, zend_bool replace TSRMLS_DC)
+{
+	sapi_header_line ctr = {0};
+	int r;
+	
+	ctr.line = header_line;
+	ctr.line_len = header_line_len;
+
+	r = sapi_header_op(replace ? SAPI_HEADER_REPLACE : SAPI_HEADER_ADD,
+			&ctr TSRMLS_CC);
+
+	if (!duplicate)
+		efree(header_line);
+
+	return r;
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API int sapi_add_header_ex(char *header_line, uint header_line_len, zend_bool duplicate, zend_bool replace TSRMLS_DC)
+{
+	sapi_header_line ctr = {0};
+	int r;
+	
+	ctr.line = header_line;
+	ctr.line_len = header_line_len;
+
+	r = sapi_header_op(replace ? SAPI_HEADER_REPLACE : SAPI_HEADER_ADD,
+			&ctr TSRMLS_CC);
+
+	if (!duplicate)
+		efree(header_line);
+
+	return r;
+}
+
+
+========================================
+
+Entry ID: 56266
+: 56266
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API size_t sapi_apply_default_charset(char **mimetype, size_t len TSRMLS_DC)
+{
+	char *charset, *newtype;
+	size_t newlen;
+	charset = SG(default_charset) ? SG(default_charset) : SAPI_DEFAULT_CHARSET;
+
+	if (*mimetype != NULL) {
+		if (*charset && strncmp(*mimetype, "text/", 5) == 0 && strstr(*mimetype, "charset=") == NULL) {
+			newlen = len + (sizeof(";charset=")-1) + strlen(charset);
+			newtype = emalloc(newlen + 1);
+	 		PHP_STRLCPY(newtype, *mimetype, newlen + 1, len);
+			strlcat(newtype, ";charset=", newlen + 1);
+			strlcat(newtype, charset, newlen + 1);
+			efree(*mimetype);
+			*mimetype = newtype;
+			return newlen;
+		}
+	}
+	return 0;
+}
+
+func_before: SAPI_API size_t sapi_apply_default_charset(char **mimetype, size_t len TSRMLS_DC)
+{
+	char *charset, *newtype;
+	size_t newlen;
+	charset = SG(default_charset) ? SG(default_charset) : SAPI_DEFAULT_CHARSET;
+
+	if (*mimetype != NULL) {
+		if (*charset && strncmp(*mimetype, "text/", 5) == 0 && strstr(*mimetype, "charset=") == NULL) {
+			newlen = len + (sizeof(";charset=")-1) + strlen(charset);
+			newtype = emalloc(newlen + 1);
+	 		PHP_STRLCPY(newtype, *mimetype, newlen + 1, len);
+			strlcat(newtype, ";charset=", newlen + 1);
+			strlcat(newtype, charset, newlen + 1);
+			efree(*mimetype);
+			*mimetype = newtype;
+			return newlen;
+		}
+	}
+	return 0;
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API size_t sapi_apply_default_charset(char **mimetype, size_t len TSRMLS_DC)
+{
+	char *charset, *newtype;
+	size_t newlen;
+	charset = SG(default_charset) ? SG(default_charset) : SAPI_DEFAULT_CHARSET;
+
+	if (*mimetype != NULL) {
+		if (*charset && strncmp(*mimetype, "text/", 5) == 0 && strstr(*mimetype, "charset=") == NULL) {
+			newlen = len + (sizeof(";charset=")-1) + strlen(charset);
+			newtype = emalloc(newlen + 1);
+	 		PHP_STRLCPY(newtype, *mimetype, newlen + 1, len);
+			strlcat(newtype, ";charset=", newlen + 1);
+			strlcat(newtype, charset, newlen + 1);
+			efree(*mimetype);
+			*mimetype = newtype;
+			return newlen;
+		}
+	}
+	return 0;
+}
+
+
+========================================
+
+Entry ID: 56267
+: 56267
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API void sapi_deactivate(TSRMLS_D)
+{
+	zend_llist_destroy(&SG(sapi_headers).headers);
+	if (SG(request_info).post_data) {
+		efree(SG(request_info).post_data);
+	}  else 	if (SG(server_context)) {
+		if(sapi_module.read_post) { 
+			/* make sure we've consumed all request input data */
+			char dummy[SAPI_POST_BLOCK_SIZE];
+			int read_bytes;
+
+			while((read_bytes = sapi_module.read_post(dummy, sizeof(dummy)-1 TSRMLS_CC)) > 0) {
+				SG(read_post_bytes) += read_bytes;
+			}
+		}
+	}
+	if (SG(request_info).raw_post_data) {
+		efree(SG(request_info).raw_post_data);
+	} 
+	if (SG(request_info).auth_user) {
+		efree(SG(request_info).auth_user);
+	}
+	if (SG(request_info).auth_password) {
+		efree(SG(request_info).auth_password);
+	}
+	if (SG(request_info).auth_digest) {
+		efree(SG(request_info).auth_digest);
+	}
+	if (SG(request_info).content_type_dup) {
+		efree(SG(request_info).content_type_dup);
+	}
+	if (SG(request_info).current_user) {
+		efree(SG(request_info).current_user);
+	}
+	if (sapi_module.deactivate) {
+		sapi_module.deactivate(TSRMLS_C);
+	}
+	if (SG(rfc1867_uploaded_files)) {
+		destroy_uploaded_files_hash(TSRMLS_C);
+	}
+	if (SG(sapi_headers).mimetype) {
+		efree(SG(sapi_headers).mimetype);
+		SG(sapi_headers).mimetype = NULL;
+	}
+	sapi_send_headers_free(TSRMLS_C);
+	SG(sapi_started) = 0;
+	SG(headers_sent) = 0;
+	SG(callback_run) = 0;
+	if (SG(callback_func)) {
+		zval_ptr_dtor(&SG(callback_func));
+	}
+	SG(request_info).headers_read = 0;
+	SG(global_request_time) = 0;
+}
+
+func_before: SAPI_API void sapi_deactivate(TSRMLS_D)
+{
+	zend_llist_destroy(&SG(sapi_headers).headers);
+	if (SG(request_info).post_data) {
+		efree(SG(request_info).post_data);
+	}  else 	if (SG(server_context)) {
+		if(sapi_module.read_post) { 
+			/* make sure we've consumed all request input data */
+			char dummy[SAPI_POST_BLOCK_SIZE];
+			int read_bytes;
+
+			while((read_bytes = sapi_module.read_post(dummy, sizeof(dummy)-1 TSRMLS_CC)) > 0) {
+				SG(read_post_bytes) += read_bytes;
+			}
+		}
+	}
+	if (SG(request_info).raw_post_data) {
+		efree(SG(request_info).raw_post_data);
+	} 
+	if (SG(request_info).auth_user) {
+		efree(SG(request_info).auth_user);
+	}
+	if (SG(request_info).auth_password) {
+		efree(SG(request_info).auth_password);
+	}
+	if (SG(request_info).auth_digest) {
+		efree(SG(request_info).auth_digest);
+	}
+	if (SG(request_info).content_type_dup) {
+		efree(SG(request_info).content_type_dup);
+	}
+	if (SG(request_info).current_user) {
+		efree(SG(request_info).current_user);
+	}
+	if (sapi_module.deactivate) {
+		sapi_module.deactivate(TSRMLS_C);
+	}
+	if (SG(rfc1867_uploaded_files)) {
+		destroy_uploaded_files_hash(TSRMLS_C);
+	}
+	if (SG(sapi_headers).mimetype) {
+		efree(SG(sapi_headers).mimetype);
+		SG(sapi_headers).mimetype = NULL;
+	}
+	sapi_send_headers_free(TSRMLS_C);
+	SG(sapi_started) = 0;
+	SG(headers_sent) = 0;
+	SG(callback_run) = 0;
+	if (SG(callback_func)) {
+		zval_ptr_dtor(&SG(callback_func));
+	}
+	SG(request_info).headers_read = 0;
+	SG(global_request_time) = 0;
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API void sapi_deactivate(TSRMLS_D)
+{
+	zend_llist_destroy(&SG(sapi_headers).headers);
+	if (SG(request_info).post_data) {
+		efree(SG(request_info).post_data);
+	}  else 	if (SG(server_context)) {
+		if(sapi_module.read_post) { 
+			/* make sure we've consumed all request input data */
+			char dummy[SAPI_POST_BLOCK_SIZE];
+			int read_bytes;
+
+			while((read_bytes = sapi_module.read_post(dummy, sizeof(dummy)-1 TSRMLS_CC)) > 0) {
+				SG(read_post_bytes) += read_bytes;
+			}
+		}
+	}
+	if (SG(request_info).raw_post_data) {
+		efree(SG(request_info).raw_post_data);
+	} 
+	if (SG(request_info).auth_user) {
+		efree(SG(request_info).auth_user);
+	}
+	if (SG(request_info).auth_password) {
+		efree(SG(request_info).auth_password);
+	}
+	if (SG(request_info).auth_digest) {
+		efree(SG(request_info).auth_digest);
+	}
+	if (SG(request_info).content_type_dup) {
+		efree(SG(request_info).content_type_dup);
+	}
+	if (SG(request_info).current_user) {
+		efree(SG(request_info).current_user);
+	}
+	if (sapi_module.deactivate) {
+		sapi_module.deactivate(TSRMLS_C);
+	}
+	if (SG(rfc1867_uploaded_files)) {
+		destroy_uploaded_files_hash(TSRMLS_C);
+	}
+	if (SG(sapi_headers).mimetype) {
+		efree(SG(sapi_headers).mimetype);
+		SG(sapi_headers).mimetype = NULL;
+	}
+	sapi_send_headers_free(TSRMLS_C);
+	SG(sapi_started) = 0;
+	SG(headers_sent) = 0;
+	SG(callback_run) = 0;
+	if (SG(callback_func)) {
+		zval_ptr_dtor(&SG(callback_func));
+	}
+	SG(request_info).headers_read = 0;
+	SG(global_request_time) = 0;
+}
+
+
+========================================
+
+Entry ID: 56268
+: 56268
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: static int sapi_extract_response_code(const char *header_line)
+{
+	int code = 200;
+	const char *ptr;
+
+	for (ptr = header_line; *ptr; ptr++) {
+		if (*ptr == ' ' && *(ptr + 1) != ' ') {
+			code = atoi(ptr + 1);
+			break;
+		}
+	}
+	
+	return code;
+}
+
+func_before: static int sapi_extract_response_code(const char *header_line)
+{
+	int code = 200;
+	const char *ptr;
+
+	for (ptr = header_line; *ptr; ptr++) {
+		if (*ptr == ' ' && *(ptr + 1) != ' ') {
+			code = atoi(ptr + 1);
+			break;
+		}
+	}
+	
+	return code;
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: static int sapi_extract_response_code(const char *header_line)
+{
+	int code = 200;
+	const char *ptr;
+
+	for (ptr = header_line; *ptr; ptr++) {
+		if (*ptr == ' ' && *(ptr + 1) != ' ') {
+			code = atoi(ptr + 1);
+			break;
+		}
+	}
+	
+	return code;
+}
+
+
+========================================
+
+Entry ID: 56269
+: 56269
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API int sapi_flush(TSRMLS_D)
+{
+	if (sapi_module.flush) {
+		sapi_module.flush(SG(server_context));
+		return SUCCESS;
+	} else {
+		return FAILURE;
+	}
+}
+
+func_before: SAPI_API int sapi_flush(TSRMLS_D)
+{
+	if (sapi_module.flush) {
+		sapi_module.flush(SG(server_context));
+		return SUCCESS;
+	} else {
+		return FAILURE;
+	}
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API int sapi_flush(TSRMLS_D)
+{
+	if (sapi_module.flush) {
+		sapi_module.flush(SG(server_context));
+		return SUCCESS;
+	} else {
+		return FAILURE;
+	}
+}
+
+
+========================================
+
+Entry ID: 56270
+: 56270
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API int sapi_force_http_10(TSRMLS_D)
+{
+	if (sapi_module.force_http_10) {
+		return sapi_module.force_http_10(TSRMLS_C);
+	} else {
+		return FAILURE;
+	}
+}
+
+func_before: SAPI_API int sapi_force_http_10(TSRMLS_D)
+{
+	if (sapi_module.force_http_10) {
+		return sapi_module.force_http_10(TSRMLS_C);
+	} else {
+		return FAILURE;
+	}
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API int sapi_force_http_10(TSRMLS_D)
+{
+	if (sapi_module.force_http_10) {
+		return sapi_module.force_http_10(TSRMLS_C);
+	} else {
+		return FAILURE;
+	}
+}
+
+
+========================================
+
+Entry ID: 56271
+: 56271
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API void sapi_free_header(sapi_header_struct *sapi_header)
+{
+	efree(sapi_header->header);
+}
+
+func_before: SAPI_API void sapi_free_header(sapi_header_struct *sapi_header)
+{
+	efree(sapi_header->header);
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API void sapi_free_header(sapi_header_struct *sapi_header)
+{
+	efree(sapi_header->header);
+}
+
+
+========================================
+
+Entry ID: 56272
+: 56272
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API char *sapi_get_default_content_type(TSRMLS_D)
+{
+	uint len;
+
+	return get_default_content_type(0, &len TSRMLS_CC);
+}
+
+func_before: SAPI_API char *sapi_get_default_content_type(TSRMLS_D)
+{
+	uint len;
+
+	return get_default_content_type(0, &len TSRMLS_CC);
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API char *sapi_get_default_content_type(TSRMLS_D)
+{
+	uint len;
+
+	return get_default_content_type(0, &len TSRMLS_CC);
+}
+
+
+========================================
+
+Entry ID: 56273
+: 56273
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API void sapi_get_default_content_type_header(sapi_header_struct *default_header TSRMLS_DC)
+{
+    uint len;
+
+	default_header->header = get_default_content_type(sizeof("Content-type: ")-1, &len TSRMLS_CC);
+	default_header->header_len = len;
+	memcpy(default_header->header, "Content-type: ", sizeof("Content-type: ") - 1);
+}
+
+func_before: SAPI_API void sapi_get_default_content_type_header(sapi_header_struct *default_header TSRMLS_DC)
+{
+    uint len;
+
+	default_header->header = get_default_content_type(sizeof("Content-type: ")-1, &len TSRMLS_CC);
+	default_header->header_len = len;
+	memcpy(default_header->header, "Content-type: ", sizeof("Content-type: ") - 1);
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API void sapi_get_default_content_type_header(sapi_header_struct *default_header TSRMLS_DC)
+{
+    uint len;
+
+	default_header->header = get_default_content_type(sizeof("Content-type: ")-1, &len TSRMLS_CC);
+	default_header->header_len = len;
+	memcpy(default_header->header, "Content-type: ", sizeof("Content-type: ") - 1);
+}
+
+
+========================================
+
+Entry ID: 56274
+: 56274
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API int sapi_get_fd(int *fd TSRMLS_DC)
+{
+	if (sapi_module.get_fd) {
+		return sapi_module.get_fd(fd TSRMLS_CC);
+	} else {
+		return FAILURE;
+	}
+}
+
+func_before: SAPI_API int sapi_get_fd(int *fd TSRMLS_DC)
+{
+	if (sapi_module.get_fd) {
+		return sapi_module.get_fd(fd TSRMLS_CC);
+	} else {
+		return FAILURE;
+	}
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API int sapi_get_fd(int *fd TSRMLS_DC)
+{
+	if (sapi_module.get_fd) {
+		return sapi_module.get_fd(fd TSRMLS_CC);
+	} else {
+		return FAILURE;
+	}
+}
+
+
+========================================
+
+Entry ID: 56275
+: 56275
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API double sapi_get_request_time(TSRMLS_D)
+{
+	if(SG(global_request_time)) return SG(global_request_time);
+
+	if (sapi_module.get_request_time && SG(server_context)) {
+		SG(global_request_time) = sapi_module.get_request_time(TSRMLS_C);
+	} else {
+		struct timeval tp = {0};
+		if (!gettimeofday(&tp, NULL)) {
+			SG(global_request_time) = (double)(tp.tv_sec + tp.tv_usec / 1000000.00);
+		} else {
+			SG(global_request_time) = (double)time(0);
+		}
+	}
+	return SG(global_request_time);
+}
+
+func_before: SAPI_API double sapi_get_request_time(TSRMLS_D)
+{
+	if(SG(global_request_time)) return SG(global_request_time);
+
+	if (sapi_module.get_request_time && SG(server_context)) {
+		SG(global_request_time) = sapi_module.get_request_time(TSRMLS_C);
+	} else {
+		struct timeval tp = {0};
+		if (!gettimeofday(&tp, NULL)) {
+			SG(global_request_time) = (double)(tp.tv_sec + tp.tv_usec / 1000000.00);
+		} else {
+			SG(global_request_time) = (double)time(0);
+		}
+	}
+	return SG(global_request_time);
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API double sapi_get_request_time(TSRMLS_D)
+{
+	if(SG(global_request_time)) return SG(global_request_time);
+
+	if (sapi_module.get_request_time && SG(server_context)) {
+		SG(global_request_time) = sapi_module.get_request_time(TSRMLS_C);
+	} else {
+		struct timeval tp = {0};
+		if (!gettimeofday(&tp, NULL)) {
+			SG(global_request_time) = (double)(tp.tv_sec + tp.tv_usec / 1000000.00);
+		} else {
+			SG(global_request_time) = (double)time(0);
+		}
+	}
+	return SG(global_request_time);
+}
+
+
+========================================
+
+Entry ID: 56276
+: 56276
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API struct stat *sapi_get_stat(TSRMLS_D)
+{
+	if (sapi_module.get_stat) {
+		return sapi_module.get_stat(TSRMLS_C);
+	} else {
+		if (!SG(request_info).path_translated || (VCWD_STAT(SG(request_info).path_translated, &SG(global_stat)) == -1)) {
+			return NULL;
+		}
+		return &SG(global_stat);
+	}
+}
+
+func_before: SAPI_API struct stat *sapi_get_stat(TSRMLS_D)
+{
+	if (sapi_module.get_stat) {
+		return sapi_module.get_stat(TSRMLS_C);
+	} else {
+		if (!SG(request_info).path_translated || (VCWD_STAT(SG(request_info).path_translated, &SG(global_stat)) == -1)) {
+			return NULL;
+		}
+		return &SG(global_stat);
+	}
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API struct stat *sapi_get_stat(TSRMLS_D)
+{
+	if (sapi_module.get_stat) {
+		return sapi_module.get_stat(TSRMLS_C);
+	} else {
+		if (!SG(request_info).path_translated || (VCWD_STAT(SG(request_info).path_translated, &SG(global_stat)) == -1)) {
+			return NULL;
+		}
+		return &SG(global_stat);
+	}
+}
+
+
+========================================
+
+Entry ID: 56277
+: 56277
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API int sapi_get_target_gid(gid_t *obj TSRMLS_DC)
+{
+	if (sapi_module.get_target_gid) {
+		return sapi_module.get_target_gid(obj TSRMLS_CC);
+	} else {
+		return FAILURE;
+	}
+}
+
+func_before: SAPI_API int sapi_get_target_gid(gid_t *obj TSRMLS_DC)
+{
+	if (sapi_module.get_target_gid) {
+		return sapi_module.get_target_gid(obj TSRMLS_CC);
+	} else {
+		return FAILURE;
+	}
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API int sapi_get_target_gid(gid_t *obj TSRMLS_DC)
+{
+	if (sapi_module.get_target_gid) {
+		return sapi_module.get_target_gid(obj TSRMLS_CC);
+	} else {
+		return FAILURE;
+	}
+}
+
+
+========================================
+
+Entry ID: 56278
+: 56278
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API int sapi_get_target_uid(uid_t *obj TSRMLS_DC)
+{
+	if (sapi_module.get_target_uid) {
+		return sapi_module.get_target_uid(obj TSRMLS_CC);
+	} else {
+		return FAILURE;
+	}
+}
+
+func_before: SAPI_API int sapi_get_target_uid(uid_t *obj TSRMLS_DC)
+{
+	if (sapi_module.get_target_uid) {
+		return sapi_module.get_target_uid(obj TSRMLS_CC);
+	} else {
+		return FAILURE;
+	}
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API int sapi_get_target_uid(uid_t *obj TSRMLS_DC)
+{
+	if (sapi_module.get_target_uid) {
+		return sapi_module.get_target_uid(obj TSRMLS_CC);
+	} else {
+		return FAILURE;
+	}
+}
+
+
+========================================
+
+Entry ID: 56279
+: 56279
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: None
+CVE ID: CVE-2015-8935
+CVE Page: https://www.cvedetails.com/cve/CVE-2015-8935/
+CWE ID: CWE-79
+Complexity: Medium
+Confidentiality: None
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2016-08-07
+Score: 4.3
+Summary: The sapi_header_op function in main/SAPI.c in PHP before 5.4.38, 5.5.x before 5.5.22, and 5.6.x before 5.6.6 supports deprecated line folding without considering browser compatibility, which allows remote attackers to conduct cross-site scripting (XSS) attacks against Internet Explorer by leveraging (1) %0A%20 or (2) %0D%0A%20 mishandling in the header function.
+Update Date: 2018-01-04
+Vulnerability Classification: XSS 
+add_lines: 0
+codeLink: https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_id: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+commit_message: Update header handling to RFC 7230
+del_lines: 0
+file_name: main/SAPI.c
+files_changed: {"sha": "2cdde78a4a9140d98acf0e5683aaaaaf6213e063", "filename": "ext/standard/tests/general_functions/bug60227_2.phpt", "status": "modified", "additions": 4, "deletions": 3, "changes": 7, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_2.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_2.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,15 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\r before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n header(\"X-foo: e\\n foo\");\n-header(\"X-Foo6: e\\rSet-Cookie: ID=123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n+\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "8246f1743835c307beb889604bc1f3ba76d0fb4a", "filename": "ext/standard/tests/general_functions/bug60227_3.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_3.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_3.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), \\0 before \\n\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\n foo\");\n header(\"X-Foo6: e\\0Set-Cookie: ID=\\n123\\n d\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain NUL bytes in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n-foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "20dba1a26568e55ad47a0af4e91efe9f59a417ba", "filename": "ext/standard/tests/general_functions/bug60227_4.phpt", "status": "modified", "additions": 3, "deletions": 3, "changes": 6, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/ext/standard/tests/general_functions/bug60227_4.phpt", "contents_url": "https://api.github.com/repos/php/php-src/contents/ext/standard/tests/general_functions/bug60227_4.phpt?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -1,14 +1,14 @@\n --TEST--\n Bug #60227 (header() cannot detect the multi-line header with CR), CRLF\n+--INI--\n+expose_php=0\n --FILE--\n <?php\n-header(\"X-foo: e\\r\\n foo\");\n header(\"X-foo: e\\r\\nfoo\");\n echo 'foo';\n ?>\n --EXPECTF--\n Warning: Header may not contain more than a single header, new line detected in %s on line %d\n foo\n --EXPECTHEADERS--\n-X-foo: e\n- foo\n+Content-type: text/html; charset=UTF-8"}<_**next**_>{"sha": "0dd0b55df548f59b60fad2cd0d5733665fe1b123", "filename": "main/SAPI.c", "status": "modified", "additions": 2, "deletions": 7, "changes": 9, "blob_url": "https://github.com/php/php-src/blob/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "raw_url": "https://github.com/php/php-src/raw/996faf964bba1aec06b153b370a7f20d3dd2bb8b/main/SAPI.c", "contents_url": "https://api.github.com/repos/php/php-src/contents/main/SAPI.c?ref=996faf964bba1aec06b153b370a7f20d3dd2bb8b", "patch": "@@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)\n \t\t/* new line/NUL character safety check */\n \t\tint i;\n \t\tfor (i = 0; i < header_line_len; i++) {\n-\t\t\t/* RFC 2616 allows new lines if followed by SP or HT */\n-\t\t\tint illegal_break =\n-\t\t\t\t\t(header_line[i+1] != ' ' && header_line[i+1] != '\\t')\n-\t\t\t\t\t&& (\n-\t\t\t\t\t\theader_line[i] == '\\n'\n-\t\t\t\t\t\t|| (header_line[i] == '\\r' && header_line[i+1] != '\\n'));\n-\t\t\tif (illegal_break) {\n+\t\t\t/* RFC 7230 ch. 3.2.4 deprecates folding support */\n+\t\t\tif (header_line[i] == '\\n' || header_line[i] == '\\r') {\n \t\t\t\tefree(header_line);\n \t\t\t\tsapi_module.sapi_error(E_WARNING, \"Header may not contain \"\n \t\t\t\t\t\t\"more than a single header, new line detected\");"}
+func_after: SAPI_API char *sapi_getenv(char *name, size_t name_len TSRMLS_DC)
+{
+	if (sapi_module.getenv) { 
+		char *value, *tmp = sapi_module.getenv(name, name_len TSRMLS_CC);
+		if (tmp) {
+			value = estrdup(tmp);
+		} else {
+			return NULL;
+		}
+		if (sapi_module.input_filter) {
+			sapi_module.input_filter(PARSE_STRING, name, &value, strlen(value), NULL TSRMLS_CC);
+		}
+		return value;
+	}
+	return NULL;
+}
+
+func_before: SAPI_API char *sapi_getenv(char *name, size_t name_len TSRMLS_DC)
+{
+	if (sapi_module.getenv) { 
+		char *value, *tmp = sapi_module.getenv(name, name_len TSRMLS_CC);
+		if (tmp) {
+			value = estrdup(tmp);
+		} else {
+			return NULL;
+		}
+		if (sapi_module.input_filter) {
+			sapi_module.input_filter(PARSE_STRING, name, &value, strlen(value), NULL TSRMLS_CC);
+		}
+		return value;
+	}
+	return NULL;
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 
+patch: @@ -743,13 +743,8 @@ SAPI_API int sapi_header_op(sapi_header_op_enum op, void *arg TSRMLS_DC)
+ 		/* new line/NUL character safety check */
+ 		int i;
+ 		for (i = 0; i < header_line_len; i++) {
+-			/* RFC 2616 allows new lines if followed by SP or HT */
+-			int illegal_break =
+-					(header_line[i+1] != ' ' && header_line[i+1] != '\t')
+-					&& (
+-						header_line[i] == '\n'
+-						|| (header_line[i] == '\r' && header_line[i+1] != '\n'));
+-			if (illegal_break) {
++			/* RFC 7230 ch. 3.2.4 deprecates folding support */
++			if (header_line[i] == '\n' || header_line[i] == '\r') {
+ 				efree(header_line);
+ 				sapi_module.sapi_error(E_WARNING, "Header may not contain "
+ 						"more than a single header, new line detected");
+project: php-src
+project_after: 996faf964bba1aec06b153b370a7f20d3dd2bb8b?w=1
+project_before: d8bc34942d4f94cecdcbc63aa0772c5717525279
+vul: 0
+vul_func_with_fix: SAPI_API char *sapi_getenv(char *name, size_t name_len TSRMLS_DC)
+{
+	if (sapi_module.getenv) { 
+		char *value, *tmp = sapi_module.getenv(name, name_len TSRMLS_CC);
+		if (tmp) {
+			value = estrdup(tmp);
+		} else {
+			return NULL;
+		}
+		if (sapi_module.input_filter) {
+			sapi_module.input_filter(PARSE_STRING, name, &value, strlen(value), NULL TSRMLS_CC);
+		}
+		return value;
+	}
+	return NULL;
+}
+
+
+========================================
+

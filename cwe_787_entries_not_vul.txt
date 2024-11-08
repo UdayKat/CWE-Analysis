@@ -1,0 +1,3271 @@
+Entry ID: 4230
+: 4230
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2018-14600
+CVE Page: https://www.cvedetails.com/cve/CVE-2018-14600/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2018-08-24
+Score: 7.5
+Summary: An issue was discovered in libX11 through 1.6.5. The function XListExtensions in ListExt.c interprets a variable as signed instead of unsigned, resulting in an out-of-bounds write (of up to 128 bytes), leading to DoS or remote code execution.
+Update Date: 2019-08-06
+Vulnerability Classification: Exec Code
+add_lines: 0
+codeLink: https://cgit.freedesktop.org/xorg/lib/libX11/commit/?id=dbf72805fd9d7b1846fe9a11b46f3994bfc27fea
+commit_id: dbf72805fd9d7b1846fe9a11b46f3994bfc27fea
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after: XFreeFontPath (char **list)
+{
+	if (list != NULL) {
+		Xfree (list[0]-1);
+		Xfree (list);
+	}
+	return 1;
+}
+
+func_before: XFreeFontPath (char **list)
+{
+	if (list != NULL) {
+		Xfree (list[0]-1);
+		Xfree (list);
+	}
+	return 1;
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: b469da1430cdcee06e31c6251b83aede072a1ff0
+patch: @@ -70,12 +70,12 @@ char **XGetFontPath(
+ 	     * unpack into null terminated strings.
+ 	     */
+ 	    chend = ch + nbytes;
+-	    length = *ch;
++	    length = *(unsigned char *)ch;
+ 	    for (i = 0; i < rep.nPaths; i++) {
+ 		if (ch + length < chend) {
+ 		    flist[i] = ch+1;  /* skip over length */
+ 		    ch += length + 1; /* find next length ... */
+-		    length = *ch;
++		    length = *(unsigned char *)ch;
+ 		    *ch = '\0'; /* and replace with null-termination */
+ 		    count++;
+ 		} else
+project: libx11
+project_after: https://cgit.freedesktop.org/xorg/lib/libX11/tree/src/GetFPath.c?id=dbf72805fd9d7b1846fe9a11b46f3994bfc27fea
+project_before: https://cgit.freedesktop.org/xorg/lib/libX11/tree/src/GetFPath.c?id=b469da1430cdcee06e31c6251b83aede072a1ff0
+vul: 0
+vul_func_with_fix: XFreeFontPath (char **list)
+{
+	if (list != NULL) {
+		Xfree (list[0]-1);
+		Xfree (list);
+	}
+	return 1;
+}
+
+
+========================================
+
+Entry ID: 4231
+: 4231
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2018-14600
+CVE Page: https://www.cvedetails.com/cve/CVE-2018-14600/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2018-08-24
+Score: 7.5
+Summary: An issue was discovered in libX11 through 1.6.5. The function XListExtensions in ListExt.c interprets a variable as signed instead of unsigned, resulting in an out-of-bounds write (of up to 128 bytes), leading to DoS or remote code execution.
+Update Date: 2019-08-06
+Vulnerability Classification: Exec Code
+add_lines: 0
+codeLink: https://cgit.freedesktop.org/xorg/lib/libX11/commit/?id=dbf72805fd9d7b1846fe9a11b46f3994bfc27fea
+commit_id: dbf72805fd9d7b1846fe9a11b46f3994bfc27fea
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after: XFreeExtensionList (char **list)
+{
+	if (list != NULL) {
+	    Xfree (list[0]-1);
+	    Xfree (list);
+	}
+	return 1;
+}
+
+func_before: XFreeExtensionList (char **list)
+{
+	if (list != NULL) {
+	    Xfree (list[0]-1);
+	    Xfree (list);
+	}
+	return 1;
+}
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: b469da1430cdcee06e31c6251b83aede072a1ff0
+patch: @@ -75,12 +75,12 @@ char **XListExtensions(
+ 	     * unpack into null terminated strings.
+ 	     */
+ 	    chend = ch + rlen;
+-	    length = *ch;
++	    length = *(unsigned char *)ch;
+ 	    for (i = 0; i < rep.nExtensions; i++) {
+ 		if (ch + length < chend) {
+ 		    list[i] = ch+1;  /* skip over length */
+ 		    ch += length + 1; /* find next length ... */
+-		    length = *ch;
++		    length = *(unsigned char *)ch;
+ 		    *ch = '\0'; /* and replace with null-termination */
+ 		    count++;
+ 		} else
+project: libx11
+project_after: https://cgit.freedesktop.org/xorg/lib/libX11/tree/src/ListExt.c?id=dbf72805fd9d7b1846fe9a11b46f3994bfc27fea
+project_before: https://cgit.freedesktop.org/xorg/lib/libX11/tree/src/ListExt.c?id=b469da1430cdcee06e31c6251b83aede072a1ff0
+vul: 0
+vul_func_with_fix: XFreeExtensionList (char **list)
+{
+	if (list != NULL) {
+	    Xfree (list[0]-1);
+	    Xfree (list);
+	}
+	return 1;
+}
+
+
+========================================
+
+Entry ID: 7466
+: 7466
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-8105
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-8105/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-24
+Score: 7.5
+Summary: FreeType 2 before 2017-03-24 has an out-of-bounds write caused by a heap-based buffer overflow related to the t1_decoder_parse_charstrings function in psaux/t1decode.c.
+Update Date: 2019-04-23
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+commit_id: f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   t1_decoder_done( T1_Decoder  decoder )
+  {
+    t1_builder_done( &decoder->builder );
+  }
+
+func_before:   t1_decoder_done( T1_Decoder  decoder )
+  {
+    t1_builder_done( &decoder->builder );
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 913f436d12dfe682c349eff8bf4cdd9065ff117d
+patch: @@ -780,10 +780,19 @@
+             /* point without adding any point to the outline    */
+             idx = decoder->num_flex_vectors++;
+             if ( idx > 0 && idx < 7 )
++            {
++              /* in malformed fonts it is possible to have other */
++              /* opcodes in the middle of a flex (which don't    */
++              /* increase `num_flex_vectors'); we thus have to   */
++              /* check whether we can add a point                */
++              if ( FT_SET_ERROR( t1_builder_check_points( builder, 1 ) ) )
++                goto Syntax_Error;
++
+               t1_builder_add_point( builder,
+                                     x,
+                                     y,
+                                     (FT_Byte)( idx == 3 || idx == 6 ) );
++            }
+           }
+           break;
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/psaux/t1decode.c?id=f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/psaux/t1decode.c?id=913f436d12dfe682c349eff8bf4cdd9065ff117d
+vul: 0
+vul_func_with_fix:   t1_decoder_done( T1_Decoder  decoder )
+  {
+    t1_builder_done( &decoder->builder );
+  }
+
+
+========================================
+
+Entry ID: 7467
+: 7467
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-8105
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-8105/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-24
+Score: 7.5
+Summary: FreeType 2 before 2017-03-24 has an out-of-bounds write caused by a heap-based buffer overflow related to the t1_decoder_parse_charstrings function in psaux/t1decode.c.
+Update Date: 2019-04-23
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+commit_id: f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   t1_decoder_init( T1_Decoder           decoder,
+                   FT_Face              face,
+                   FT_Size              size,
+                   FT_GlyphSlot         slot,
+                   FT_Byte**            glyph_names,
+                   PS_Blend             blend,
+                   FT_Bool              hinting,
+                   FT_Render_Mode       hint_mode,
+                   T1_Decoder_Callback  parse_callback )
+  {
+    FT_ZERO( decoder );
+
+    /* retrieve PSNames interface from list of current modules */
+    {
+      FT_Service_PsCMaps  psnames;
+
+
+      FT_FACE_FIND_GLOBAL_SERVICE( face, psnames, POSTSCRIPT_CMAPS );
+      if ( !psnames )
+      {
+        FT_ERROR(( "t1_decoder_init:"
+                   " the `psnames' module is not available\n" ));
+        return FT_THROW( Unimplemented_Feature );
+      }
+
+      decoder->psnames = psnames;
+    }
+
+    t1_builder_init( &decoder->builder, face, size, slot, hinting );
+
+    /* decoder->buildchar and decoder->len_buildchar have to be  */
+    /* initialized by the caller since we cannot know the length */
+    /* of the BuildCharArray                                     */
+
+    decoder->num_glyphs     = (FT_UInt)face->num_glyphs;
+    decoder->glyph_names    = glyph_names;
+    decoder->hint_mode      = hint_mode;
+    decoder->blend          = blend;
+    decoder->parse_callback = parse_callback;
+
+    decoder->funcs          = t1_decoder_funcs;
+
+    return FT_Err_Ok;
+  }
+
+func_before:   t1_decoder_init( T1_Decoder           decoder,
+                   FT_Face              face,
+                   FT_Size              size,
+                   FT_GlyphSlot         slot,
+                   FT_Byte**            glyph_names,
+                   PS_Blend             blend,
+                   FT_Bool              hinting,
+                   FT_Render_Mode       hint_mode,
+                   T1_Decoder_Callback  parse_callback )
+  {
+    FT_ZERO( decoder );
+
+    /* retrieve PSNames interface from list of current modules */
+    {
+      FT_Service_PsCMaps  psnames;
+
+
+      FT_FACE_FIND_GLOBAL_SERVICE( face, psnames, POSTSCRIPT_CMAPS );
+      if ( !psnames )
+      {
+        FT_ERROR(( "t1_decoder_init:"
+                   " the `psnames' module is not available\n" ));
+        return FT_THROW( Unimplemented_Feature );
+      }
+
+      decoder->psnames = psnames;
+    }
+
+    t1_builder_init( &decoder->builder, face, size, slot, hinting );
+
+    /* decoder->buildchar and decoder->len_buildchar have to be  */
+    /* initialized by the caller since we cannot know the length */
+    /* of the BuildCharArray                                     */
+
+    decoder->num_glyphs     = (FT_UInt)face->num_glyphs;
+    decoder->glyph_names    = glyph_names;
+    decoder->hint_mode      = hint_mode;
+    decoder->blend          = blend;
+    decoder->parse_callback = parse_callback;
+
+    decoder->funcs          = t1_decoder_funcs;
+
+    return FT_Err_Ok;
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 913f436d12dfe682c349eff8bf4cdd9065ff117d
+patch: @@ -780,10 +780,19 @@
+             /* point without adding any point to the outline    */
+             idx = decoder->num_flex_vectors++;
+             if ( idx > 0 && idx < 7 )
++            {
++              /* in malformed fonts it is possible to have other */
++              /* opcodes in the middle of a flex (which don't    */
++              /* increase `num_flex_vectors'); we thus have to   */
++              /* check whether we can add a point                */
++              if ( FT_SET_ERROR( t1_builder_check_points( builder, 1 ) ) )
++                goto Syntax_Error;
++
+               t1_builder_add_point( builder,
+                                     x,
+                                     y,
+                                     (FT_Byte)( idx == 3 || idx == 6 ) );
++            }
+           }
+           break;
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/psaux/t1decode.c?id=f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/psaux/t1decode.c?id=913f436d12dfe682c349eff8bf4cdd9065ff117d
+vul: 0
+vul_func_with_fix:   t1_decoder_init( T1_Decoder           decoder,
+                   FT_Face              face,
+                   FT_Size              size,
+                   FT_GlyphSlot         slot,
+                   FT_Byte**            glyph_names,
+                   PS_Blend             blend,
+                   FT_Bool              hinting,
+                   FT_Render_Mode       hint_mode,
+                   T1_Decoder_Callback  parse_callback )
+  {
+    FT_ZERO( decoder );
+
+    /* retrieve PSNames interface from list of current modules */
+    {
+      FT_Service_PsCMaps  psnames;
+
+
+      FT_FACE_FIND_GLOBAL_SERVICE( face, psnames, POSTSCRIPT_CMAPS );
+      if ( !psnames )
+      {
+        FT_ERROR(( "t1_decoder_init:"
+                   " the `psnames' module is not available\n" ));
+        return FT_THROW( Unimplemented_Feature );
+      }
+
+      decoder->psnames = psnames;
+    }
+
+    t1_builder_init( &decoder->builder, face, size, slot, hinting );
+
+    /* decoder->buildchar and decoder->len_buildchar have to be  */
+    /* initialized by the caller since we cannot know the length */
+    /* of the BuildCharArray                                     */
+
+    decoder->num_glyphs     = (FT_UInt)face->num_glyphs;
+    decoder->glyph_names    = glyph_names;
+    decoder->hint_mode      = hint_mode;
+    decoder->blend          = blend;
+    decoder->parse_callback = parse_callback;
+
+    decoder->funcs          = t1_decoder_funcs;
+
+    return FT_Err_Ok;
+  }
+
+
+========================================
+
+Entry ID: 7468
+: 7468
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-8105
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-8105/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-24
+Score: 7.5
+Summary: FreeType 2 before 2017-03-24 has an out-of-bounds write caused by a heap-based buffer overflow related to the t1_decoder_parse_charstrings function in psaux/t1decode.c.
+Update Date: 2019-04-23
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+commit_id: f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   t1_decoder_parse_glyph( T1_Decoder  decoder,
+                          FT_UInt     glyph )
+  {
+    return decoder->parse_callback( decoder, glyph );
+  }
+
+func_before:   t1_decoder_parse_glyph( T1_Decoder  decoder,
+                          FT_UInt     glyph )
+  {
+    return decoder->parse_callback( decoder, glyph );
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 913f436d12dfe682c349eff8bf4cdd9065ff117d
+patch: @@ -780,10 +780,19 @@
+             /* point without adding any point to the outline    */
+             idx = decoder->num_flex_vectors++;
+             if ( idx > 0 && idx < 7 )
++            {
++              /* in malformed fonts it is possible to have other */
++              /* opcodes in the middle of a flex (which don't    */
++              /* increase `num_flex_vectors'); we thus have to   */
++              /* check whether we can add a point                */
++              if ( FT_SET_ERROR( t1_builder_check_points( builder, 1 ) ) )
++                goto Syntax_Error;
++
+               t1_builder_add_point( builder,
+                                     x,
+                                     y,
+                                     (FT_Byte)( idx == 3 || idx == 6 ) );
++            }
+           }
+           break;
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/psaux/t1decode.c?id=f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/psaux/t1decode.c?id=913f436d12dfe682c349eff8bf4cdd9065ff117d
+vul: 0
+vul_func_with_fix:   t1_decoder_parse_glyph( T1_Decoder  decoder,
+                          FT_UInt     glyph )
+  {
+    return decoder->parse_callback( decoder, glyph );
+  }
+
+
+========================================
+
+Entry ID: 7469
+: 7469
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-8105
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-8105/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-24
+Score: 7.5
+Summary: FreeType 2 before 2017-03-24 has an out-of-bounds write caused by a heap-based buffer overflow related to the t1_decoder_parse_charstrings function in psaux/t1decode.c.
+Update Date: 2019-04-23
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+commit_id: f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   t1_lookup_glyph_by_stdcharcode( T1_Decoder  decoder,
+                                  FT_Int      charcode )
+  {
+    FT_UInt             n;
+    const FT_String*    glyph_name;
+    FT_Service_PsCMaps  psnames = decoder->psnames;
+
+
+    /* check range of standard char code */
+    if ( charcode < 0 || charcode > 255 )
+      return -1;
+
+    glyph_name = psnames->adobe_std_strings(
+                   psnames->adobe_std_encoding[charcode]);
+
+    for ( n = 0; n < decoder->num_glyphs; n++ )
+    {
+      FT_String*  name = (FT_String*)decoder->glyph_names[n];
+
+
+      if ( name                               &&
+           name[0] == glyph_name[0]           &&
+           ft_strcmp( name, glyph_name ) == 0 )
+        return (FT_Int)n;
+    }
+
+    return -1;
+  }
+
+func_before:   t1_lookup_glyph_by_stdcharcode( T1_Decoder  decoder,
+                                  FT_Int      charcode )
+  {
+    FT_UInt             n;
+    const FT_String*    glyph_name;
+    FT_Service_PsCMaps  psnames = decoder->psnames;
+
+
+    /* check range of standard char code */
+    if ( charcode < 0 || charcode > 255 )
+      return -1;
+
+    glyph_name = psnames->adobe_std_strings(
+                   psnames->adobe_std_encoding[charcode]);
+
+    for ( n = 0; n < decoder->num_glyphs; n++ )
+    {
+      FT_String*  name = (FT_String*)decoder->glyph_names[n];
+
+
+      if ( name                               &&
+           name[0] == glyph_name[0]           &&
+           ft_strcmp( name, glyph_name ) == 0 )
+        return (FT_Int)n;
+    }
+
+    return -1;
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 913f436d12dfe682c349eff8bf4cdd9065ff117d
+patch: @@ -780,10 +780,19 @@
+             /* point without adding any point to the outline    */
+             idx = decoder->num_flex_vectors++;
+             if ( idx > 0 && idx < 7 )
++            {
++              /* in malformed fonts it is possible to have other */
++              /* opcodes in the middle of a flex (which don't    */
++              /* increase `num_flex_vectors'); we thus have to   */
++              /* check whether we can add a point                */
++              if ( FT_SET_ERROR( t1_builder_check_points( builder, 1 ) ) )
++                goto Syntax_Error;
++
+               t1_builder_add_point( builder,
+                                     x,
+                                     y,
+                                     (FT_Byte)( idx == 3 || idx == 6 ) );
++            }
+           }
+           break;
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/psaux/t1decode.c?id=f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/psaux/t1decode.c?id=913f436d12dfe682c349eff8bf4cdd9065ff117d
+vul: 0
+vul_func_with_fix:   t1_lookup_glyph_by_stdcharcode( T1_Decoder  decoder,
+                                  FT_Int      charcode )
+  {
+    FT_UInt             n;
+    const FT_String*    glyph_name;
+    FT_Service_PsCMaps  psnames = decoder->psnames;
+
+
+    /* check range of standard char code */
+    if ( charcode < 0 || charcode > 255 )
+      return -1;
+
+    glyph_name = psnames->adobe_std_strings(
+                   psnames->adobe_std_encoding[charcode]);
+
+    for ( n = 0; n < decoder->num_glyphs; n++ )
+    {
+      FT_String*  name = (FT_String*)decoder->glyph_names[n];
+
+
+      if ( name                               &&
+           name[0] == glyph_name[0]           &&
+           ft_strcmp( name, glyph_name ) == 0 )
+        return (FT_Int)n;
+    }
+
+    return -1;
+  }
+
+
+========================================
+
+Entry ID: 7470
+: 7470
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-8105
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-8105/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-24
+Score: 7.5
+Summary: FreeType 2 before 2017-03-24 has an out-of-bounds write caused by a heap-based buffer overflow related to the t1_decoder_parse_charstrings function in psaux/t1decode.c.
+Update Date: 2019-04-23
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+commit_id: f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   t1operator_seac( T1_Decoder  decoder,
+                   FT_Pos      asb,
+                   FT_Pos      adx,
+                   FT_Pos      ady,
+                   FT_Int      bchar,
+                   FT_Int      achar )
+  {
+    FT_Error     error;
+    FT_Int       bchar_index, achar_index;
+#if 0
+    FT_Int       n_base_points;
+    FT_Outline*  base = decoder->builder.base;
+#endif
+    FT_Vector    left_bearing, advance;
+
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+    T1_Face      face  = (T1_Face)decoder->builder.face;
+#endif
+
+
+    if ( decoder->seac )
+    {
+      FT_ERROR(( "t1operator_seac: invalid nested seac\n" ));
+      return FT_THROW( Syntax_Error );
+    }
+
+    if ( decoder->builder.metrics_only )
+    {
+      FT_ERROR(( "t1operator_seac: unexpected seac\n" ));
+      return FT_THROW( Syntax_Error );
+    }
+
+    /* seac weirdness */
+    adx += decoder->builder.left_bearing.x;
+
+    /* `glyph_names' is set to 0 for CID fonts which do not */
+    /* include an encoding.  How can we deal with these?    */
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+    if ( decoder->glyph_names == 0                   &&
+         !face->root.internal->incremental_interface )
+#else
+    if ( decoder->glyph_names == 0 )
+#endif /* FT_CONFIG_OPTION_INCREMENTAL */
+    {
+      FT_ERROR(( "t1operator_seac:"
+                 " glyph names table not available in this font\n" ));
+      return FT_THROW( Syntax_Error );
+    }
+
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+    if ( face->root.internal->incremental_interface )
+    {
+      /* the caller must handle the font encoding also */
+      bchar_index = bchar;
+      achar_index = achar;
+    }
+    else
+#endif
+    {
+      bchar_index = t1_lookup_glyph_by_stdcharcode( decoder, bchar );
+      achar_index = t1_lookup_glyph_by_stdcharcode( decoder, achar );
+    }
+
+    if ( bchar_index < 0 || achar_index < 0 )
+    {
+      FT_ERROR(( "t1operator_seac:"
+                 " invalid seac character code arguments\n" ));
+      return FT_THROW( Syntax_Error );
+    }
+
+    /* if we are trying to load a composite glyph, do not load the */
+    /* accent character and return the array of subglyphs.         */
+    if ( decoder->builder.no_recurse )
+    {
+      FT_GlyphSlot    glyph  = (FT_GlyphSlot)decoder->builder.glyph;
+      FT_GlyphLoader  loader = glyph->internal->loader;
+      FT_SubGlyph     subg;
+
+
+      /* reallocate subglyph array if necessary */
+      error = FT_GlyphLoader_CheckSubGlyphs( loader, 2 );
+      if ( error )
+        goto Exit;
+
+      subg = loader->current.subglyphs;
+
+      /* subglyph 0 = base character */
+      subg->index = bchar_index;
+      subg->flags = FT_SUBGLYPH_FLAG_ARGS_ARE_XY_VALUES |
+                    FT_SUBGLYPH_FLAG_USE_MY_METRICS;
+      subg->arg1  = 0;
+      subg->arg2  = 0;
+      subg++;
+
+      /* subglyph 1 = accent character */
+      subg->index = achar_index;
+      subg->flags = FT_SUBGLYPH_FLAG_ARGS_ARE_XY_VALUES;
+      subg->arg1  = (FT_Int)FIXED_TO_INT( adx - asb );
+      subg->arg2  = (FT_Int)FIXED_TO_INT( ady );
+
+      /* set up remaining glyph fields */
+      glyph->num_subglyphs = 2;
+      glyph->subglyphs     = loader->base.subglyphs;
+      glyph->format        = FT_GLYPH_FORMAT_COMPOSITE;
+
+      loader->current.num_subglyphs = 2;
+      goto Exit;
+    }
+
+    /* First load `bchar' in builder */
+    /* now load the unscaled outline */
+
+    FT_GlyphLoader_Prepare( decoder->builder.loader );  /* prepare loader */
+
+    /* the seac operator must not be nested */
+    decoder->seac = TRUE;
+    error = t1_decoder_parse_glyph( decoder, (FT_UInt)bchar_index );
+    decoder->seac = FALSE;
+    if ( error )
+      goto Exit;
+
+    /* save the left bearing and width of the base character */
+    /* as they will be erased by the next load.              */
+
+    left_bearing = decoder->builder.left_bearing;
+    advance      = decoder->builder.advance;
+
+    decoder->builder.left_bearing.x = 0;
+    decoder->builder.left_bearing.y = 0;
+
+    decoder->builder.pos_x = adx - asb;
+    decoder->builder.pos_y = ady;
+
+    /* Now load `achar' on top of */
+    /* the base outline           */
+
+    /* the seac operator must not be nested */
+    decoder->seac = TRUE;
+    error = t1_decoder_parse_glyph( decoder, (FT_UInt)achar_index );
+    decoder->seac = FALSE;
+    if ( error )
+      goto Exit;
+
+    /* restore the left side bearing and   */
+    /* advance width of the base character */
+
+    decoder->builder.left_bearing = left_bearing;
+    decoder->builder.advance      = advance;
+
+    decoder->builder.pos_x = 0;
+    decoder->builder.pos_y = 0;
+
+  Exit:
+    return error;
+  }
+
+func_before:   t1operator_seac( T1_Decoder  decoder,
+                   FT_Pos      asb,
+                   FT_Pos      adx,
+                   FT_Pos      ady,
+                   FT_Int      bchar,
+                   FT_Int      achar )
+  {
+    FT_Error     error;
+    FT_Int       bchar_index, achar_index;
+#if 0
+    FT_Int       n_base_points;
+    FT_Outline*  base = decoder->builder.base;
+#endif
+    FT_Vector    left_bearing, advance;
+
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+    T1_Face      face  = (T1_Face)decoder->builder.face;
+#endif
+
+
+    if ( decoder->seac )
+    {
+      FT_ERROR(( "t1operator_seac: invalid nested seac\n" ));
+      return FT_THROW( Syntax_Error );
+    }
+
+    if ( decoder->builder.metrics_only )
+    {
+      FT_ERROR(( "t1operator_seac: unexpected seac\n" ));
+      return FT_THROW( Syntax_Error );
+    }
+
+    /* seac weirdness */
+    adx += decoder->builder.left_bearing.x;
+
+    /* `glyph_names' is set to 0 for CID fonts which do not */
+    /* include an encoding.  How can we deal with these?    */
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+    if ( decoder->glyph_names == 0                   &&
+         !face->root.internal->incremental_interface )
+#else
+    if ( decoder->glyph_names == 0 )
+#endif /* FT_CONFIG_OPTION_INCREMENTAL */
+    {
+      FT_ERROR(( "t1operator_seac:"
+                 " glyph names table not available in this font\n" ));
+      return FT_THROW( Syntax_Error );
+    }
+
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+    if ( face->root.internal->incremental_interface )
+    {
+      /* the caller must handle the font encoding also */
+      bchar_index = bchar;
+      achar_index = achar;
+    }
+    else
+#endif
+    {
+      bchar_index = t1_lookup_glyph_by_stdcharcode( decoder, bchar );
+      achar_index = t1_lookup_glyph_by_stdcharcode( decoder, achar );
+    }
+
+    if ( bchar_index < 0 || achar_index < 0 )
+    {
+      FT_ERROR(( "t1operator_seac:"
+                 " invalid seac character code arguments\n" ));
+      return FT_THROW( Syntax_Error );
+    }
+
+    /* if we are trying to load a composite glyph, do not load the */
+    /* accent character and return the array of subglyphs.         */
+    if ( decoder->builder.no_recurse )
+    {
+      FT_GlyphSlot    glyph  = (FT_GlyphSlot)decoder->builder.glyph;
+      FT_GlyphLoader  loader = glyph->internal->loader;
+      FT_SubGlyph     subg;
+
+
+      /* reallocate subglyph array if necessary */
+      error = FT_GlyphLoader_CheckSubGlyphs( loader, 2 );
+      if ( error )
+        goto Exit;
+
+      subg = loader->current.subglyphs;
+
+      /* subglyph 0 = base character */
+      subg->index = bchar_index;
+      subg->flags = FT_SUBGLYPH_FLAG_ARGS_ARE_XY_VALUES |
+                    FT_SUBGLYPH_FLAG_USE_MY_METRICS;
+      subg->arg1  = 0;
+      subg->arg2  = 0;
+      subg++;
+
+      /* subglyph 1 = accent character */
+      subg->index = achar_index;
+      subg->flags = FT_SUBGLYPH_FLAG_ARGS_ARE_XY_VALUES;
+      subg->arg1  = (FT_Int)FIXED_TO_INT( adx - asb );
+      subg->arg2  = (FT_Int)FIXED_TO_INT( ady );
+
+      /* set up remaining glyph fields */
+      glyph->num_subglyphs = 2;
+      glyph->subglyphs     = loader->base.subglyphs;
+      glyph->format        = FT_GLYPH_FORMAT_COMPOSITE;
+
+      loader->current.num_subglyphs = 2;
+      goto Exit;
+    }
+
+    /* First load `bchar' in builder */
+    /* now load the unscaled outline */
+
+    FT_GlyphLoader_Prepare( decoder->builder.loader );  /* prepare loader */
+
+    /* the seac operator must not be nested */
+    decoder->seac = TRUE;
+    error = t1_decoder_parse_glyph( decoder, (FT_UInt)bchar_index );
+    decoder->seac = FALSE;
+    if ( error )
+      goto Exit;
+
+    /* save the left bearing and width of the base character */
+    /* as they will be erased by the next load.              */
+
+    left_bearing = decoder->builder.left_bearing;
+    advance      = decoder->builder.advance;
+
+    decoder->builder.left_bearing.x = 0;
+    decoder->builder.left_bearing.y = 0;
+
+    decoder->builder.pos_x = adx - asb;
+    decoder->builder.pos_y = ady;
+
+    /* Now load `achar' on top of */
+    /* the base outline           */
+
+    /* the seac operator must not be nested */
+    decoder->seac = TRUE;
+    error = t1_decoder_parse_glyph( decoder, (FT_UInt)achar_index );
+    decoder->seac = FALSE;
+    if ( error )
+      goto Exit;
+
+    /* restore the left side bearing and   */
+    /* advance width of the base character */
+
+    decoder->builder.left_bearing = left_bearing;
+    decoder->builder.advance      = advance;
+
+    decoder->builder.pos_x = 0;
+    decoder->builder.pos_y = 0;
+
+  Exit:
+    return error;
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: 913f436d12dfe682c349eff8bf4cdd9065ff117d
+patch: @@ -780,10 +780,19 @@
+             /* point without adding any point to the outline    */
+             idx = decoder->num_flex_vectors++;
+             if ( idx > 0 && idx < 7 )
++            {
++              /* in malformed fonts it is possible to have other */
++              /* opcodes in the middle of a flex (which don't    */
++              /* increase `num_flex_vectors'); we thus have to   */
++              /* check whether we can add a point                */
++              if ( FT_SET_ERROR( t1_builder_check_points( builder, 1 ) ) )
++                goto Syntax_Error;
++
+               t1_builder_add_point( builder,
+                                     x,
+                                     y,
+                                     (FT_Byte)( idx == 3 || idx == 6 ) );
++            }
+           }
+           break;
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/psaux/t1decode.c?id=f958c48ee431bef8d4d466b40c9cb2d4dbcb7791
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/psaux/t1decode.c?id=913f436d12dfe682c349eff8bf4cdd9065ff117d
+vul: 0
+vul_func_with_fix:   t1operator_seac( T1_Decoder  decoder,
+                   FT_Pos      asb,
+                   FT_Pos      adx,
+                   FT_Pos      ady,
+                   FT_Int      bchar,
+                   FT_Int      achar )
+  {
+    FT_Error     error;
+    FT_Int       bchar_index, achar_index;
+#if 0
+    FT_Int       n_base_points;
+    FT_Outline*  base = decoder->builder.base;
+#endif
+    FT_Vector    left_bearing, advance;
+
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+    T1_Face      face  = (T1_Face)decoder->builder.face;
+#endif
+
+
+    if ( decoder->seac )
+    {
+      FT_ERROR(( "t1operator_seac: invalid nested seac\n" ));
+      return FT_THROW( Syntax_Error );
+    }
+
+    if ( decoder->builder.metrics_only )
+    {
+      FT_ERROR(( "t1operator_seac: unexpected seac\n" ));
+      return FT_THROW( Syntax_Error );
+    }
+
+    /* seac weirdness */
+    adx += decoder->builder.left_bearing.x;
+
+    /* `glyph_names' is set to 0 for CID fonts which do not */
+    /* include an encoding.  How can we deal with these?    */
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+    if ( decoder->glyph_names == 0                   &&
+         !face->root.internal->incremental_interface )
+#else
+    if ( decoder->glyph_names == 0 )
+#endif /* FT_CONFIG_OPTION_INCREMENTAL */
+    {
+      FT_ERROR(( "t1operator_seac:"
+                 " glyph names table not available in this font\n" ));
+      return FT_THROW( Syntax_Error );
+    }
+
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+    if ( face->root.internal->incremental_interface )
+    {
+      /* the caller must handle the font encoding also */
+      bchar_index = bchar;
+      achar_index = achar;
+    }
+    else
+#endif
+    {
+      bchar_index = t1_lookup_glyph_by_stdcharcode( decoder, bchar );
+      achar_index = t1_lookup_glyph_by_stdcharcode( decoder, achar );
+    }
+
+    if ( bchar_index < 0 || achar_index < 0 )
+    {
+      FT_ERROR(( "t1operator_seac:"
+                 " invalid seac character code arguments\n" ));
+      return FT_THROW( Syntax_Error );
+    }
+
+    /* if we are trying to load a composite glyph, do not load the */
+    /* accent character and return the array of subglyphs.         */
+    if ( decoder->builder.no_recurse )
+    {
+      FT_GlyphSlot    glyph  = (FT_GlyphSlot)decoder->builder.glyph;
+      FT_GlyphLoader  loader = glyph->internal->loader;
+      FT_SubGlyph     subg;
+
+
+      /* reallocate subglyph array if necessary */
+      error = FT_GlyphLoader_CheckSubGlyphs( loader, 2 );
+      if ( error )
+        goto Exit;
+
+      subg = loader->current.subglyphs;
+
+      /* subglyph 0 = base character */
+      subg->index = bchar_index;
+      subg->flags = FT_SUBGLYPH_FLAG_ARGS_ARE_XY_VALUES |
+                    FT_SUBGLYPH_FLAG_USE_MY_METRICS;
+      subg->arg1  = 0;
+      subg->arg2  = 0;
+      subg++;
+
+      /* subglyph 1 = accent character */
+      subg->index = achar_index;
+      subg->flags = FT_SUBGLYPH_FLAG_ARGS_ARE_XY_VALUES;
+      subg->arg1  = (FT_Int)FIXED_TO_INT( adx - asb );
+      subg->arg2  = (FT_Int)FIXED_TO_INT( ady );
+
+      /* set up remaining glyph fields */
+      glyph->num_subglyphs = 2;
+      glyph->subglyphs     = loader->base.subglyphs;
+      glyph->format        = FT_GLYPH_FORMAT_COMPOSITE;
+
+      loader->current.num_subglyphs = 2;
+      goto Exit;
+    }
+
+    /* First load `bchar' in builder */
+    /* now load the unscaled outline */
+
+    FT_GlyphLoader_Prepare( decoder->builder.loader );  /* prepare loader */
+
+    /* the seac operator must not be nested */
+    decoder->seac = TRUE;
+    error = t1_decoder_parse_glyph( decoder, (FT_UInt)bchar_index );
+    decoder->seac = FALSE;
+    if ( error )
+      goto Exit;
+
+    /* save the left bearing and width of the base character */
+    /* as they will be erased by the next load.              */
+
+    left_bearing = decoder->builder.left_bearing;
+    advance      = decoder->builder.advance;
+
+    decoder->builder.left_bearing.x = 0;
+    decoder->builder.left_bearing.y = 0;
+
+    decoder->builder.pos_x = adx - asb;
+    decoder->builder.pos_y = ady;
+
+    /* Now load `achar' on top of */
+    /* the base outline           */
+
+    /* the seac operator must not be nested */
+    decoder->seac = TRUE;
+    error = t1_decoder_parse_glyph( decoder, (FT_UInt)achar_index );
+    decoder->seac = FALSE;
+    if ( error )
+      goto Exit;
+
+    /* restore the left side bearing and   */
+    /* advance width of the base character */
+
+    decoder->builder.left_bearing = left_bearing;
+    decoder->builder.advance      = advance;
+
+    decoder->builder.pos_x = 0;
+    decoder->builder.pos_y = 0;
+
+  Exit:
+    return error;
+  }
+
+
+========================================
+
+Entry ID: 7507
+: 7507
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-7864
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-7864/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-14
+Score: 7.5
+Summary: FreeType 2 before 2017-02-02 has an out-of-bounds write caused by a heap-based buffer overflow related to the tt_size_reset function in truetype/ttobjs.c.
+Update Date: 2017-06-30
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_id: e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   tt_check_single_notdef( FT_Face  ttface )
+  {
+    FT_Bool   result = FALSE;
+
+    TT_Face   face = (TT_Face)ttface;
+    FT_UInt   asize;
+    FT_ULong  i;
+    FT_ULong  glyph_index = 0;
+    FT_UInt   count       = 0;
+
+
+    for( i = 0; i < face->num_locations; i++ )
+    {
+      tt_face_get_location( face, i, &asize );
+      if ( asize > 0 )
+      {
+        count += 1;
+        if ( count > 1 )
+          break;
+        glyph_index = i;
+      }
+    }
+
+    /* Only have a single outline. */
+    if ( count == 1 )
+    {
+      if ( glyph_index == 0 )
+        result = TRUE;
+      else
+      {
+        /* FIXME: Need to test glyphname == .notdef ? */
+        FT_Error error;
+        char buf[8];
+
+
+        error = FT_Get_Glyph_Name( ttface, glyph_index, buf, 8 );
+        if ( !error                                            &&
+             buf[0] == '.' && !ft_strncmp( buf, ".notdef", 8 ) )
+          result = TRUE;
+      }
+    }
+
+    return result;
+  }
+
+func_before:   tt_check_single_notdef( FT_Face  ttface )
+  {
+    FT_Bool   result = FALSE;
+
+    TT_Face   face = (TT_Face)ttface;
+    FT_UInt   asize;
+    FT_ULong  i;
+    FT_ULong  glyph_index = 0;
+    FT_UInt   count       = 0;
+
+
+    for( i = 0; i < face->num_locations; i++ )
+    {
+      tt_face_get_location( face, i, &asize );
+      if ( asize > 0 )
+      {
+        count += 1;
+        if ( count > 1 )
+          break;
+        glyph_index = i;
+      }
+    }
+
+    /* Only have a single outline. */
+    if ( count == 1 )
+    {
+      if ( glyph_index == 0 )
+        result = TRUE;
+      else
+      {
+        /* FIXME: Need to test glyphname == .notdef ? */
+        FT_Error error;
+        char buf[8];
+
+
+        error = FT_Get_Glyph_Name( ttface, glyph_index, buf, 8 );
+        if ( !error                                            &&
+             buf[0] == '.' && !ft_strncmp( buf, ".notdef", 8 ) )
+          result = TRUE;
+      }
+    }
+
+    return result;
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+patch: @@ -1212,10 +1212,14 @@
+     FT_Size_Metrics*  metrics;
+ 
+ 
+-    size->ttmetrics.valid = FALSE;
+-
+     face = (TT_Face)size->root.face;
+ 
++    /* nothing to do for CFF2 */
++    if ( face->isCFF2 )
++      return FT_Err_Ok;
++
++    size->ttmetrics.valid = FALSE;
++
+     metrics = &size->metrics;
+ 
+     /* copy the result from base layer */
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+vul: 0
+vul_func_with_fix:   tt_check_single_notdef( FT_Face  ttface )
+  {
+    FT_Bool   result = FALSE;
+
+    TT_Face   face = (TT_Face)ttface;
+    FT_UInt   asize;
+    FT_ULong  i;
+    FT_ULong  glyph_index = 0;
+    FT_UInt   count       = 0;
+
+
+    for( i = 0; i < face->num_locations; i++ )
+    {
+      tt_face_get_location( face, i, &asize );
+      if ( asize > 0 )
+      {
+        count += 1;
+        if ( count > 1 )
+          break;
+        glyph_index = i;
+      }
+    }
+
+    /* Only have a single outline. */
+    if ( count == 1 )
+    {
+      if ( glyph_index == 0 )
+        result = TRUE;
+      else
+      {
+        /* FIXME: Need to test glyphname == .notdef ? */
+        FT_Error error;
+        char buf[8];
+
+
+        error = FT_Get_Glyph_Name( ttface, glyph_index, buf, 8 );
+        if ( !error                                            &&
+             buf[0] == '.' && !ft_strncmp( buf, ".notdef", 8 ) )
+          result = TRUE;
+      }
+    }
+
+    return result;
+  }
+
+
+========================================
+
+Entry ID: 7508
+: 7508
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-7864
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-7864/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-14
+Score: 7.5
+Summary: FreeType 2 before 2017-02-02 has an out-of-bounds write caused by a heap-based buffer overflow related to the tt_size_reset function in truetype/ttobjs.c.
+Update Date: 2017-06-30
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_id: e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   tt_check_trickyness( FT_Face  face )
+  {
+    if ( !face )
+      return FALSE;
+
+    /* For first, check the face name for quick check. */
+    if ( face->family_name                               &&
+         tt_check_trickyness_family( face->family_name ) )
+      return TRUE;
+
+    /* Type42 fonts may lack `name' tables, we thus try to identify */
+    /* tricky fonts by checking the checksums of Type42-persistent  */
+    /* sfnt tables (`cvt', `fpgm', and `prep').                     */
+    if ( tt_check_trickyness_sfnt_ids( (TT_Face)face ) )
+      return TRUE;
+
+    return FALSE;
+  }
+
+func_before:   tt_check_trickyness( FT_Face  face )
+  {
+    if ( !face )
+      return FALSE;
+
+    /* For first, check the face name for quick check. */
+    if ( face->family_name                               &&
+         tt_check_trickyness_family( face->family_name ) )
+      return TRUE;
+
+    /* Type42 fonts may lack `name' tables, we thus try to identify */
+    /* tricky fonts by checking the checksums of Type42-persistent  */
+    /* sfnt tables (`cvt', `fpgm', and `prep').                     */
+    if ( tt_check_trickyness_sfnt_ids( (TT_Face)face ) )
+      return TRUE;
+
+    return FALSE;
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+patch: @@ -1212,10 +1212,14 @@
+     FT_Size_Metrics*  metrics;
+ 
+ 
+-    size->ttmetrics.valid = FALSE;
+-
+     face = (TT_Face)size->root.face;
+ 
++    /* nothing to do for CFF2 */
++    if ( face->isCFF2 )
++      return FT_Err_Ok;
++
++    size->ttmetrics.valid = FALSE;
++
+     metrics = &size->metrics;
+ 
+     /* copy the result from base layer */
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+vul: 0
+vul_func_with_fix:   tt_check_trickyness( FT_Face  face )
+  {
+    if ( !face )
+      return FALSE;
+
+    /* For first, check the face name for quick check. */
+    if ( face->family_name                               &&
+         tt_check_trickyness_family( face->family_name ) )
+      return TRUE;
+
+    /* Type42 fonts may lack `name' tables, we thus try to identify */
+    /* tricky fonts by checking the checksums of Type42-persistent  */
+    /* sfnt tables (`cvt', `fpgm', and `prep').                     */
+    if ( tt_check_trickyness_sfnt_ids( (TT_Face)face ) )
+      return TRUE;
+
+    return FALSE;
+  }
+
+
+========================================
+
+Entry ID: 7509
+: 7509
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-7864
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-7864/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-14
+Score: 7.5
+Summary: FreeType 2 before 2017-02-02 has an out-of-bounds write caused by a heap-based buffer overflow related to the tt_size_reset function in truetype/ttobjs.c.
+Update Date: 2017-06-30
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_id: e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   tt_check_trickyness_family( FT_String*  name )
+  {
+
+#define TRICK_NAMES_MAX_CHARACTERS  19
+#define TRICK_NAMES_COUNT            9
+
+    static const char trick_names[TRICK_NAMES_COUNT]
+                                 [TRICK_NAMES_MAX_CHARACTERS + 1] =
+    {
+      "DFKaiSho-SB",        /* dfkaisb.ttf */
+      "DFKaiShu",
+      "DFKai-SB",           /* kaiu.ttf */
+      "HuaTianKaiTi?",      /* htkt2.ttf */
+      "HuaTianSongTi?",     /* htst3.ttf */
+      "Ming(for ISO10646)", /* hkscsiic.ttf & iicore.ttf */
+      "MingLiU",            /* mingliu.ttf & mingliu.ttc */
+      "PMingLiU",           /* mingliu.ttc */
+      "MingLi43",           /* mingli.ttf */
+    };
+
+    int  nn;
+
+
+    for ( nn = 0; nn < TRICK_NAMES_COUNT; nn++ )
+      if ( ft_strstr( name, trick_names[nn] ) )
+        return TRUE;
+
+    return FALSE;
+  }
+
+func_before:   tt_check_trickyness_family( FT_String*  name )
+  {
+
+#define TRICK_NAMES_MAX_CHARACTERS  19
+#define TRICK_NAMES_COUNT            9
+
+    static const char trick_names[TRICK_NAMES_COUNT]
+                                 [TRICK_NAMES_MAX_CHARACTERS + 1] =
+    {
+      "DFKaiSho-SB",        /* dfkaisb.ttf */
+      "DFKaiShu",
+      "DFKai-SB",           /* kaiu.ttf */
+      "HuaTianKaiTi?",      /* htkt2.ttf */
+      "HuaTianSongTi?",     /* htst3.ttf */
+      "Ming(for ISO10646)", /* hkscsiic.ttf & iicore.ttf */
+      "MingLiU",            /* mingliu.ttf & mingliu.ttc */
+      "PMingLiU",           /* mingliu.ttc */
+      "MingLi43",           /* mingli.ttf */
+    };
+
+    int  nn;
+
+
+    for ( nn = 0; nn < TRICK_NAMES_COUNT; nn++ )
+      if ( ft_strstr( name, trick_names[nn] ) )
+        return TRUE;
+
+    return FALSE;
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+patch: @@ -1212,10 +1212,14 @@
+     FT_Size_Metrics*  metrics;
+ 
+ 
+-    size->ttmetrics.valid = FALSE;
+-
+     face = (TT_Face)size->root.face;
+ 
++    /* nothing to do for CFF2 */
++    if ( face->isCFF2 )
++      return FT_Err_Ok;
++
++    size->ttmetrics.valid = FALSE;
++
+     metrics = &size->metrics;
+ 
+     /* copy the result from base layer */
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+vul: 0
+vul_func_with_fix:   tt_check_trickyness_family( FT_String*  name )
+  {
+
+#define TRICK_NAMES_MAX_CHARACTERS  19
+#define TRICK_NAMES_COUNT            9
+
+    static const char trick_names[TRICK_NAMES_COUNT]
+                                 [TRICK_NAMES_MAX_CHARACTERS + 1] =
+    {
+      "DFKaiSho-SB",        /* dfkaisb.ttf */
+      "DFKaiShu",
+      "DFKai-SB",           /* kaiu.ttf */
+      "HuaTianKaiTi?",      /* htkt2.ttf */
+      "HuaTianSongTi?",     /* htst3.ttf */
+      "Ming(for ISO10646)", /* hkscsiic.ttf & iicore.ttf */
+      "MingLiU",            /* mingliu.ttf & mingliu.ttc */
+      "PMingLiU",           /* mingliu.ttc */
+      "MingLi43",           /* mingli.ttf */
+    };
+
+    int  nn;
+
+
+    for ( nn = 0; nn < TRICK_NAMES_COUNT; nn++ )
+      if ( ft_strstr( name, trick_names[nn] ) )
+        return TRUE;
+
+    return FALSE;
+  }
+
+
+========================================
+
+Entry ID: 7510
+: 7510
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-7864
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-7864/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-14
+Score: 7.5
+Summary: FreeType 2 before 2017-02-02 has an out-of-bounds write caused by a heap-based buffer overflow related to the tt_size_reset function in truetype/ttobjs.c.
+Update Date: 2017-06-30
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_id: e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   tt_driver_done( FT_Module  ttdriver )     /* TT_Driver */
+  {
+    FT_UNUSED( ttdriver );
+  }
+
+func_before:   tt_driver_done( FT_Module  ttdriver )     /* TT_Driver */
+  {
+    FT_UNUSED( ttdriver );
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+patch: @@ -1212,10 +1212,14 @@
+     FT_Size_Metrics*  metrics;
+ 
+ 
+-    size->ttmetrics.valid = FALSE;
+-
+     face = (TT_Face)size->root.face;
+ 
++    /* nothing to do for CFF2 */
++    if ( face->isCFF2 )
++      return FT_Err_Ok;
++
++    size->ttmetrics.valid = FALSE;
++
+     metrics = &size->metrics;
+ 
+     /* copy the result from base layer */
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+vul: 0
+vul_func_with_fix:   tt_driver_done( FT_Module  ttdriver )     /* TT_Driver */
+  {
+    FT_UNUSED( ttdriver );
+  }
+
+
+========================================
+
+Entry ID: 7511
+: 7511
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-7864
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-7864/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-14
+Score: 7.5
+Summary: FreeType 2 before 2017-02-02 has an out-of-bounds write caused by a heap-based buffer overflow related to the tt_size_reset function in truetype/ttobjs.c.
+Update Date: 2017-06-30
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_id: e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   tt_driver_init( FT_Module  ttdriver )     /* TT_Driver */
+  {
+
+#ifdef TT_USE_BYTECODE_INTERPRETER
+
+    TT_Driver  driver = (TT_Driver)ttdriver;
+
+    driver->interpreter_version = TT_INTERPRETER_VERSION_35;
+#ifdef TT_SUPPORT_SUBPIXEL_HINTING_INFINALITY
+    driver->interpreter_version = TT_INTERPRETER_VERSION_38;
+#endif
+#ifdef TT_SUPPORT_SUBPIXEL_HINTING_MINIMAL
+    driver->interpreter_version = TT_INTERPRETER_VERSION_40;
+#endif
+
+#else /* !TT_USE_BYTECODE_INTERPRETER */
+
+    FT_UNUSED( ttdriver );
+
+#endif /* !TT_USE_BYTECODE_INTERPRETER */
+
+    return FT_Err_Ok;
+  }
+
+func_before:   tt_driver_init( FT_Module  ttdriver )     /* TT_Driver */
+  {
+
+#ifdef TT_USE_BYTECODE_INTERPRETER
+
+    TT_Driver  driver = (TT_Driver)ttdriver;
+
+    driver->interpreter_version = TT_INTERPRETER_VERSION_35;
+#ifdef TT_SUPPORT_SUBPIXEL_HINTING_INFINALITY
+    driver->interpreter_version = TT_INTERPRETER_VERSION_38;
+#endif
+#ifdef TT_SUPPORT_SUBPIXEL_HINTING_MINIMAL
+    driver->interpreter_version = TT_INTERPRETER_VERSION_40;
+#endif
+
+#else /* !TT_USE_BYTECODE_INTERPRETER */
+
+    FT_UNUSED( ttdriver );
+
+#endif /* !TT_USE_BYTECODE_INTERPRETER */
+
+    return FT_Err_Ok;
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+patch: @@ -1212,10 +1212,14 @@
+     FT_Size_Metrics*  metrics;
+ 
+ 
+-    size->ttmetrics.valid = FALSE;
+-
+     face = (TT_Face)size->root.face;
+ 
++    /* nothing to do for CFF2 */
++    if ( face->isCFF2 )
++      return FT_Err_Ok;
++
++    size->ttmetrics.valid = FALSE;
++
+     metrics = &size->metrics;
+ 
+     /* copy the result from base layer */
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+vul: 0
+vul_func_with_fix:   tt_driver_init( FT_Module  ttdriver )     /* TT_Driver */
+  {
+
+#ifdef TT_USE_BYTECODE_INTERPRETER
+
+    TT_Driver  driver = (TT_Driver)ttdriver;
+
+    driver->interpreter_version = TT_INTERPRETER_VERSION_35;
+#ifdef TT_SUPPORT_SUBPIXEL_HINTING_INFINALITY
+    driver->interpreter_version = TT_INTERPRETER_VERSION_38;
+#endif
+#ifdef TT_SUPPORT_SUBPIXEL_HINTING_MINIMAL
+    driver->interpreter_version = TT_INTERPRETER_VERSION_40;
+#endif
+
+#else /* !TT_USE_BYTECODE_INTERPRETER */
+
+    FT_UNUSED( ttdriver );
+
+#endif /* !TT_USE_BYTECODE_INTERPRETER */
+
+    return FT_Err_Ok;
+  }
+
+
+========================================
+
+Entry ID: 7512
+: 7512
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-7864
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-7864/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-14
+Score: 7.5
+Summary: FreeType 2 before 2017-02-02 has an out-of-bounds write caused by a heap-based buffer overflow related to the tt_size_reset function in truetype/ttobjs.c.
+Update Date: 2017-06-30
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_id: e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   tt_face_done( FT_Face  ttface )           /* TT_Face */
+  {
+    TT_Face       face = (TT_Face)ttface;
+    FT_Memory     memory;
+    FT_Stream     stream;
+    SFNT_Service  sfnt;
+
+
+    if ( !face )
+      return;
+
+    memory = ttface->memory;
+    stream = ttface->stream;
+    sfnt   = (SFNT_Service)face->sfnt;
+
+    /* for `extended TrueType formats' (i.e. compressed versions) */
+    if ( face->extra.finalizer )
+      face->extra.finalizer( face->extra.data );
+
+    if ( sfnt )
+      sfnt->done_face( face );
+
+    /* freeing the locations table */
+    tt_face_done_loca( face );
+
+    tt_face_free_hdmx( face );
+
+    /* freeing the CVT */
+    FT_FREE( face->cvt );
+    face->cvt_size = 0;
+
+    /* freeing the programs */
+    FT_FRAME_RELEASE( face->font_program );
+    FT_FRAME_RELEASE( face->cvt_program );
+    face->font_program_size = 0;
+    face->cvt_program_size  = 0;
+
+#ifdef TT_CONFIG_OPTION_GX_VAR_SUPPORT
+    tt_done_blend( face );
+    face->blend = NULL;
+#endif
+  }
+
+func_before:   tt_face_done( FT_Face  ttface )           /* TT_Face */
+  {
+    TT_Face       face = (TT_Face)ttface;
+    FT_Memory     memory;
+    FT_Stream     stream;
+    SFNT_Service  sfnt;
+
+
+    if ( !face )
+      return;
+
+    memory = ttface->memory;
+    stream = ttface->stream;
+    sfnt   = (SFNT_Service)face->sfnt;
+
+    /* for `extended TrueType formats' (i.e. compressed versions) */
+    if ( face->extra.finalizer )
+      face->extra.finalizer( face->extra.data );
+
+    if ( sfnt )
+      sfnt->done_face( face );
+
+    /* freeing the locations table */
+    tt_face_done_loca( face );
+
+    tt_face_free_hdmx( face );
+
+    /* freeing the CVT */
+    FT_FREE( face->cvt );
+    face->cvt_size = 0;
+
+    /* freeing the programs */
+    FT_FRAME_RELEASE( face->font_program );
+    FT_FRAME_RELEASE( face->cvt_program );
+    face->font_program_size = 0;
+    face->cvt_program_size  = 0;
+
+#ifdef TT_CONFIG_OPTION_GX_VAR_SUPPORT
+    tt_done_blend( face );
+    face->blend = NULL;
+#endif
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+patch: @@ -1212,10 +1212,14 @@
+     FT_Size_Metrics*  metrics;
+ 
+ 
+-    size->ttmetrics.valid = FALSE;
+-
+     face = (TT_Face)size->root.face;
+ 
++    /* nothing to do for CFF2 */
++    if ( face->isCFF2 )
++      return FT_Err_Ok;
++
++    size->ttmetrics.valid = FALSE;
++
+     metrics = &size->metrics;
+ 
+     /* copy the result from base layer */
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+vul: 0
+vul_func_with_fix:   tt_face_done( FT_Face  ttface )           /* TT_Face */
+  {
+    TT_Face       face = (TT_Face)ttface;
+    FT_Memory     memory;
+    FT_Stream     stream;
+    SFNT_Service  sfnt;
+
+
+    if ( !face )
+      return;
+
+    memory = ttface->memory;
+    stream = ttface->stream;
+    sfnt   = (SFNT_Service)face->sfnt;
+
+    /* for `extended TrueType formats' (i.e. compressed versions) */
+    if ( face->extra.finalizer )
+      face->extra.finalizer( face->extra.data );
+
+    if ( sfnt )
+      sfnt->done_face( face );
+
+    /* freeing the locations table */
+    tt_face_done_loca( face );
+
+    tt_face_free_hdmx( face );
+
+    /* freeing the CVT */
+    FT_FREE( face->cvt );
+    face->cvt_size = 0;
+
+    /* freeing the programs */
+    FT_FRAME_RELEASE( face->font_program );
+    FT_FRAME_RELEASE( face->cvt_program );
+    face->font_program_size = 0;
+    face->cvt_program_size  = 0;
+
+#ifdef TT_CONFIG_OPTION_GX_VAR_SUPPORT
+    tt_done_blend( face );
+    face->blend = NULL;
+#endif
+  }
+
+
+========================================
+
+Entry ID: 7513
+: 7513
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-7864
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-7864/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-14
+Score: 7.5
+Summary: FreeType 2 before 2017-02-02 has an out-of-bounds write caused by a heap-based buffer overflow related to the tt_size_reset function in truetype/ttobjs.c.
+Update Date: 2017-06-30
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_id: e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   tt_face_init( FT_Stream      stream,
+                FT_Face        ttface,      /* TT_Face */
+                FT_Int         face_index,
+                FT_Int         num_params,
+                FT_Parameter*  params )
+  {
+    FT_Error      error;
+    FT_Library    library;
+    SFNT_Service  sfnt;
+    TT_Face       face = (TT_Face)ttface;
+
+
+    FT_TRACE2(( "TTF driver\n" ));
+
+    library = ttface->driver->root.library;
+
+    sfnt = (SFNT_Service)FT_Get_Module_Interface( library, "sfnt" );
+    if ( !sfnt )
+    {
+      FT_ERROR(( "tt_face_init: cannot access `sfnt' module\n" ));
+      error = FT_THROW( Missing_Module );
+      goto Exit;
+    }
+
+    /* create input stream from resource */
+    if ( FT_STREAM_SEEK( 0 ) )
+      goto Exit;
+
+    /* check that we have a valid TrueType file */
+    FT_TRACE2(( "  " ));
+    error = sfnt->init_face( stream, face, face_index, num_params, params );
+
+    /* Stream may have changed. */
+    stream = face->root.stream;
+
+    if ( error )
+      goto Exit;
+
+    /* We must also be able to accept Mac/GX fonts, as well as OT ones. */
+    /* The 0x00020000 tag is completely undocumented; some fonts from   */
+    /* Arphic made for Chinese Windows 3.1 have this.                   */
+    if ( face->format_tag != 0x00010000L &&    /* MS fonts  */
+         face->format_tag != 0x00020000L &&    /* CJK fonts for Win 3.1 */
+         face->format_tag != TTAG_true   )     /* Mac fonts */
+    {
+      FT_TRACE2(( "  not a TTF font\n" ));
+      goto Bad_Format;
+    }
+
+#ifdef TT_USE_BYTECODE_INTERPRETER
+    ttface->face_flags |= FT_FACE_FLAG_HINTER;
+#endif
+
+    /* If we are performing a simple font format check, exit immediately. */
+    if ( face_index < 0 )
+      return FT_Err_Ok;
+
+    /* Load font directory */
+    error = sfnt->load_face( stream, face, face_index, num_params, params );
+    if ( error )
+      goto Exit;
+
+    if ( tt_check_trickyness( ttface ) )
+      ttface->face_flags |= FT_FACE_FLAG_TRICKY;
+
+    error = tt_face_load_hdmx( face, stream );
+    if ( error )
+      goto Exit;
+
+    if ( FT_IS_SCALABLE( ttface ) )
+    {
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+      if ( !ttface->internal->incremental_interface )
+#endif
+      {
+        error = tt_face_load_loca( face, stream );
+
+        /* having a (non-zero) `glyf' table without */
+        /* a `loca' table is not valid              */
+        if ( face->glyf_len && FT_ERR_EQ( error, Table_Missing ) )
+          goto Exit;
+        if ( error )
+          goto Exit;
+      }
+
+      /* `fpgm', `cvt', and `prep' are optional */
+      error = tt_face_load_cvt( face, stream );
+      if ( error && FT_ERR_NEQ( error, Table_Missing ) )
+        goto Exit;
+
+      error = tt_face_load_fpgm( face, stream );
+      if ( error && FT_ERR_NEQ( error, Table_Missing ) )
+        goto Exit;
+
+      error = tt_face_load_prep( face, stream );
+      if ( error && FT_ERR_NEQ( error, Table_Missing ) )
+        goto Exit;
+
+      /* Check the scalable flag based on `loca'. */
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+      if ( !ttface->internal->incremental_interface )
+#endif
+      {
+        if ( ttface->num_fixed_sizes          &&
+             face->glyph_locations            &&
+             tt_check_single_notdef( ttface ) )
+        {
+          FT_TRACE5(( "tt_face_init:"
+                      " Only the `.notdef' glyph has an outline.\n"
+                      "             "
+                      " Resetting scalable flag to FALSE.\n" ));
+
+          ttface->face_flags &= ~FT_FACE_FLAG_SCALABLE;
+        }
+      }
+    }
+
+#ifdef TT_CONFIG_OPTION_GX_VAR_SUPPORT
+
+    {
+      FT_Int  instance_index = face_index >> 16;
+
+
+      if ( FT_HAS_MULTIPLE_MASTERS( ttface ) &&
+           instance_index > 0                )
+      {
+        error = TT_Get_MM_Var( face, NULL );
+        if ( error )
+          goto Exit;
+
+        if ( face->blend->mmvar->namedstyle )
+        {
+          FT_Memory  memory = ttface->memory;
+
+          FT_Var_Named_Style*  named_style;
+          FT_String*           style_name;
+
+
+          /* in `face_index', the instance index starts with value 1 */
+          named_style = face->blend->mmvar->namedstyle + instance_index - 1;
+          error = sfnt->get_name( face,
+                                  (FT_UShort)named_style->strid,
+                                  &style_name );
+          if ( error )
+            goto Exit;
+
+          /* set style name; if already set, replace it */
+          if ( face->root.style_name )
+            FT_FREE( face->root.style_name );
+          face->root.style_name = style_name;
+
+          /* finally, select the named instance */
+          error = TT_Set_Var_Design( face,
+                                     face->blend->mmvar->num_axis,
+                                     named_style->coords );
+          if ( error )
+            goto Exit;
+
+          tt_apply_mvar( face );
+        }
+      }
+    }
+
+#endif /* TT_CONFIG_OPTION_GX_VAR_SUPPORT */
+
+    /* initialize standard glyph loading routines */
+    TT_Init_Glyph_Loading( face );
+
+  Exit:
+    return error;
+
+  Bad_Format:
+    error = FT_THROW( Unknown_File_Format );
+    goto Exit;
+  }
+
+func_before:   tt_face_init( FT_Stream      stream,
+                FT_Face        ttface,      /* TT_Face */
+                FT_Int         face_index,
+                FT_Int         num_params,
+                FT_Parameter*  params )
+  {
+    FT_Error      error;
+    FT_Library    library;
+    SFNT_Service  sfnt;
+    TT_Face       face = (TT_Face)ttface;
+
+
+    FT_TRACE2(( "TTF driver\n" ));
+
+    library = ttface->driver->root.library;
+
+    sfnt = (SFNT_Service)FT_Get_Module_Interface( library, "sfnt" );
+    if ( !sfnt )
+    {
+      FT_ERROR(( "tt_face_init: cannot access `sfnt' module\n" ));
+      error = FT_THROW( Missing_Module );
+      goto Exit;
+    }
+
+    /* create input stream from resource */
+    if ( FT_STREAM_SEEK( 0 ) )
+      goto Exit;
+
+    /* check that we have a valid TrueType file */
+    FT_TRACE2(( "  " ));
+    error = sfnt->init_face( stream, face, face_index, num_params, params );
+
+    /* Stream may have changed. */
+    stream = face->root.stream;
+
+    if ( error )
+      goto Exit;
+
+    /* We must also be able to accept Mac/GX fonts, as well as OT ones. */
+    /* The 0x00020000 tag is completely undocumented; some fonts from   */
+    /* Arphic made for Chinese Windows 3.1 have this.                   */
+    if ( face->format_tag != 0x00010000L &&    /* MS fonts  */
+         face->format_tag != 0x00020000L &&    /* CJK fonts for Win 3.1 */
+         face->format_tag != TTAG_true   )     /* Mac fonts */
+    {
+      FT_TRACE2(( "  not a TTF font\n" ));
+      goto Bad_Format;
+    }
+
+#ifdef TT_USE_BYTECODE_INTERPRETER
+    ttface->face_flags |= FT_FACE_FLAG_HINTER;
+#endif
+
+    /* If we are performing a simple font format check, exit immediately. */
+    if ( face_index < 0 )
+      return FT_Err_Ok;
+
+    /* Load font directory */
+    error = sfnt->load_face( stream, face, face_index, num_params, params );
+    if ( error )
+      goto Exit;
+
+    if ( tt_check_trickyness( ttface ) )
+      ttface->face_flags |= FT_FACE_FLAG_TRICKY;
+
+    error = tt_face_load_hdmx( face, stream );
+    if ( error )
+      goto Exit;
+
+    if ( FT_IS_SCALABLE( ttface ) )
+    {
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+      if ( !ttface->internal->incremental_interface )
+#endif
+      {
+        error = tt_face_load_loca( face, stream );
+
+        /* having a (non-zero) `glyf' table without */
+        /* a `loca' table is not valid              */
+        if ( face->glyf_len && FT_ERR_EQ( error, Table_Missing ) )
+          goto Exit;
+        if ( error )
+          goto Exit;
+      }
+
+      /* `fpgm', `cvt', and `prep' are optional */
+      error = tt_face_load_cvt( face, stream );
+      if ( error && FT_ERR_NEQ( error, Table_Missing ) )
+        goto Exit;
+
+      error = tt_face_load_fpgm( face, stream );
+      if ( error && FT_ERR_NEQ( error, Table_Missing ) )
+        goto Exit;
+
+      error = tt_face_load_prep( face, stream );
+      if ( error && FT_ERR_NEQ( error, Table_Missing ) )
+        goto Exit;
+
+      /* Check the scalable flag based on `loca'. */
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+      if ( !ttface->internal->incremental_interface )
+#endif
+      {
+        if ( ttface->num_fixed_sizes          &&
+             face->glyph_locations            &&
+             tt_check_single_notdef( ttface ) )
+        {
+          FT_TRACE5(( "tt_face_init:"
+                      " Only the `.notdef' glyph has an outline.\n"
+                      "             "
+                      " Resetting scalable flag to FALSE.\n" ));
+
+          ttface->face_flags &= ~FT_FACE_FLAG_SCALABLE;
+        }
+      }
+    }
+
+#ifdef TT_CONFIG_OPTION_GX_VAR_SUPPORT
+
+    {
+      FT_Int  instance_index = face_index >> 16;
+
+
+      if ( FT_HAS_MULTIPLE_MASTERS( ttface ) &&
+           instance_index > 0                )
+      {
+        error = TT_Get_MM_Var( face, NULL );
+        if ( error )
+          goto Exit;
+
+        if ( face->blend->mmvar->namedstyle )
+        {
+          FT_Memory  memory = ttface->memory;
+
+          FT_Var_Named_Style*  named_style;
+          FT_String*           style_name;
+
+
+          /* in `face_index', the instance index starts with value 1 */
+          named_style = face->blend->mmvar->namedstyle + instance_index - 1;
+          error = sfnt->get_name( face,
+                                  (FT_UShort)named_style->strid,
+                                  &style_name );
+          if ( error )
+            goto Exit;
+
+          /* set style name; if already set, replace it */
+          if ( face->root.style_name )
+            FT_FREE( face->root.style_name );
+          face->root.style_name = style_name;
+
+          /* finally, select the named instance */
+          error = TT_Set_Var_Design( face,
+                                     face->blend->mmvar->num_axis,
+                                     named_style->coords );
+          if ( error )
+            goto Exit;
+
+          tt_apply_mvar( face );
+        }
+      }
+    }
+
+#endif /* TT_CONFIG_OPTION_GX_VAR_SUPPORT */
+
+    /* initialize standard glyph loading routines */
+    TT_Init_Glyph_Loading( face );
+
+  Exit:
+    return error;
+
+  Bad_Format:
+    error = FT_THROW( Unknown_File_Format );
+    goto Exit;
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+patch: @@ -1212,10 +1212,14 @@
+     FT_Size_Metrics*  metrics;
+ 
+ 
+-    size->ttmetrics.valid = FALSE;
+-
+     face = (TT_Face)size->root.face;
+ 
++    /* nothing to do for CFF2 */
++    if ( face->isCFF2 )
++      return FT_Err_Ok;
++
++    size->ttmetrics.valid = FALSE;
++
+     metrics = &size->metrics;
+ 
+     /* copy the result from base layer */
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+vul: 0
+vul_func_with_fix:   tt_face_init( FT_Stream      stream,
+                FT_Face        ttface,      /* TT_Face */
+                FT_Int         face_index,
+                FT_Int         num_params,
+                FT_Parameter*  params )
+  {
+    FT_Error      error;
+    FT_Library    library;
+    SFNT_Service  sfnt;
+    TT_Face       face = (TT_Face)ttface;
+
+
+    FT_TRACE2(( "TTF driver\n" ));
+
+    library = ttface->driver->root.library;
+
+    sfnt = (SFNT_Service)FT_Get_Module_Interface( library, "sfnt" );
+    if ( !sfnt )
+    {
+      FT_ERROR(( "tt_face_init: cannot access `sfnt' module\n" ));
+      error = FT_THROW( Missing_Module );
+      goto Exit;
+    }
+
+    /* create input stream from resource */
+    if ( FT_STREAM_SEEK( 0 ) )
+      goto Exit;
+
+    /* check that we have a valid TrueType file */
+    FT_TRACE2(( "  " ));
+    error = sfnt->init_face( stream, face, face_index, num_params, params );
+
+    /* Stream may have changed. */
+    stream = face->root.stream;
+
+    if ( error )
+      goto Exit;
+
+    /* We must also be able to accept Mac/GX fonts, as well as OT ones. */
+    /* The 0x00020000 tag is completely undocumented; some fonts from   */
+    /* Arphic made for Chinese Windows 3.1 have this.                   */
+    if ( face->format_tag != 0x00010000L &&    /* MS fonts  */
+         face->format_tag != 0x00020000L &&    /* CJK fonts for Win 3.1 */
+         face->format_tag != TTAG_true   )     /* Mac fonts */
+    {
+      FT_TRACE2(( "  not a TTF font\n" ));
+      goto Bad_Format;
+    }
+
+#ifdef TT_USE_BYTECODE_INTERPRETER
+    ttface->face_flags |= FT_FACE_FLAG_HINTER;
+#endif
+
+    /* If we are performing a simple font format check, exit immediately. */
+    if ( face_index < 0 )
+      return FT_Err_Ok;
+
+    /* Load font directory */
+    error = sfnt->load_face( stream, face, face_index, num_params, params );
+    if ( error )
+      goto Exit;
+
+    if ( tt_check_trickyness( ttface ) )
+      ttface->face_flags |= FT_FACE_FLAG_TRICKY;
+
+    error = tt_face_load_hdmx( face, stream );
+    if ( error )
+      goto Exit;
+
+    if ( FT_IS_SCALABLE( ttface ) )
+    {
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+      if ( !ttface->internal->incremental_interface )
+#endif
+      {
+        error = tt_face_load_loca( face, stream );
+
+        /* having a (non-zero) `glyf' table without */
+        /* a `loca' table is not valid              */
+        if ( face->glyf_len && FT_ERR_EQ( error, Table_Missing ) )
+          goto Exit;
+        if ( error )
+          goto Exit;
+      }
+
+      /* `fpgm', `cvt', and `prep' are optional */
+      error = tt_face_load_cvt( face, stream );
+      if ( error && FT_ERR_NEQ( error, Table_Missing ) )
+        goto Exit;
+
+      error = tt_face_load_fpgm( face, stream );
+      if ( error && FT_ERR_NEQ( error, Table_Missing ) )
+        goto Exit;
+
+      error = tt_face_load_prep( face, stream );
+      if ( error && FT_ERR_NEQ( error, Table_Missing ) )
+        goto Exit;
+
+      /* Check the scalable flag based on `loca'. */
+#ifdef FT_CONFIG_OPTION_INCREMENTAL
+      if ( !ttface->internal->incremental_interface )
+#endif
+      {
+        if ( ttface->num_fixed_sizes          &&
+             face->glyph_locations            &&
+             tt_check_single_notdef( ttface ) )
+        {
+          FT_TRACE5(( "tt_face_init:"
+                      " Only the `.notdef' glyph has an outline.\n"
+                      "             "
+                      " Resetting scalable flag to FALSE.\n" ));
+
+          ttface->face_flags &= ~FT_FACE_FLAG_SCALABLE;
+        }
+      }
+    }
+
+#ifdef TT_CONFIG_OPTION_GX_VAR_SUPPORT
+
+    {
+      FT_Int  instance_index = face_index >> 16;
+
+
+      if ( FT_HAS_MULTIPLE_MASTERS( ttface ) &&
+           instance_index > 0                )
+      {
+        error = TT_Get_MM_Var( face, NULL );
+        if ( error )
+          goto Exit;
+
+        if ( face->blend->mmvar->namedstyle )
+        {
+          FT_Memory  memory = ttface->memory;
+
+          FT_Var_Named_Style*  named_style;
+          FT_String*           style_name;
+
+
+          /* in `face_index', the instance index starts with value 1 */
+          named_style = face->blend->mmvar->namedstyle + instance_index - 1;
+          error = sfnt->get_name( face,
+                                  (FT_UShort)named_style->strid,
+                                  &style_name );
+          if ( error )
+            goto Exit;
+
+          /* set style name; if already set, replace it */
+          if ( face->root.style_name )
+            FT_FREE( face->root.style_name );
+          face->root.style_name = style_name;
+
+          /* finally, select the named instance */
+          error = TT_Set_Var_Design( face,
+                                     face->blend->mmvar->num_axis,
+                                     named_style->coords );
+          if ( error )
+            goto Exit;
+
+          tt_apply_mvar( face );
+        }
+      }
+    }
+
+#endif /* TT_CONFIG_OPTION_GX_VAR_SUPPORT */
+
+    /* initialize standard glyph loading routines */
+    TT_Init_Glyph_Loading( face );
+
+  Exit:
+    return error;
+
+  Bad_Format:
+    error = FT_THROW( Unknown_File_Format );
+    goto Exit;
+  }
+
+
+========================================
+
+Entry ID: 7514
+: 7514
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-7864
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-7864/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-14
+Score: 7.5
+Summary: FreeType 2 before 2017-02-02 has an out-of-bounds write caused by a heap-based buffer overflow related to the tt_size_reset function in truetype/ttobjs.c.
+Update Date: 2017-06-30
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_id: e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   tt_get_sfnt_checksum( TT_Face    face,
+                        FT_UShort  i )
+  {
+#if 0 /* if we believe the written value, use following part. */
+    if ( face->dir_tables[i].CheckSum )
+      return face->dir_tables[i].CheckSum;
+#endif
+
+    if ( !face->goto_table )
+      return 0;
+
+    if ( face->goto_table( face,
+                           face->dir_tables[i].Tag,
+                           face->root.stream,
+                           NULL ) )
+      return 0;
+
+    return (FT_ULong)tt_synth_sfnt_checksum( face->root.stream,
+                                             face->dir_tables[i].Length );
+  }
+
+func_before:   tt_get_sfnt_checksum( TT_Face    face,
+                        FT_UShort  i )
+  {
+#if 0 /* if we believe the written value, use following part. */
+    if ( face->dir_tables[i].CheckSum )
+      return face->dir_tables[i].CheckSum;
+#endif
+
+    if ( !face->goto_table )
+      return 0;
+
+    if ( face->goto_table( face,
+                           face->dir_tables[i].Tag,
+                           face->root.stream,
+                           NULL ) )
+      return 0;
+
+    return (FT_ULong)tt_synth_sfnt_checksum( face->root.stream,
+                                             face->dir_tables[i].Length );
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+patch: @@ -1212,10 +1212,14 @@
+     FT_Size_Metrics*  metrics;
+ 
+ 
+-    size->ttmetrics.valid = FALSE;
+-
+     face = (TT_Face)size->root.face;
+ 
++    /* nothing to do for CFF2 */
++    if ( face->isCFF2 )
++      return FT_Err_Ok;
++
++    size->ttmetrics.valid = FALSE;
++
+     metrics = &size->metrics;
+ 
+     /* copy the result from base layer */
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+vul: 0
+vul_func_with_fix:   tt_get_sfnt_checksum( TT_Face    face,
+                        FT_UShort  i )
+  {
+#if 0 /* if we believe the written value, use following part. */
+    if ( face->dir_tables[i].CheckSum )
+      return face->dir_tables[i].CheckSum;
+#endif
+
+    if ( !face->goto_table )
+      return 0;
+
+    if ( face->goto_table( face,
+                           face->dir_tables[i].Tag,
+                           face->root.stream,
+                           NULL ) )
+      return 0;
+
+    return (FT_ULong)tt_synth_sfnt_checksum( face->root.stream,
+                                             face->dir_tables[i].Length );
+  }
+
+
+========================================
+
+Entry ID: 7515
+: 7515
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-7864
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-7864/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-14
+Score: 7.5
+Summary: FreeType 2 before 2017-02-02 has an out-of-bounds write caused by a heap-based buffer overflow related to the tt_size_reset function in truetype/ttobjs.c.
+Update Date: 2017-06-30
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_id: e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   tt_glyphzone_done( TT_GlyphZone  zone )
+  {
+    FT_Memory  memory = zone->memory;
+
+
+    if ( memory )
+    {
+      FT_FREE( zone->contours );
+      FT_FREE( zone->tags );
+      FT_FREE( zone->cur );
+      FT_FREE( zone->org );
+      FT_FREE( zone->orus );
+
+      zone->max_points   = zone->n_points   = 0;
+      zone->max_contours = zone->n_contours = 0;
+      zone->memory       = NULL;
+    }
+  }
+
+func_before:   tt_glyphzone_done( TT_GlyphZone  zone )
+  {
+    FT_Memory  memory = zone->memory;
+
+
+    if ( memory )
+    {
+      FT_FREE( zone->contours );
+      FT_FREE( zone->tags );
+      FT_FREE( zone->cur );
+      FT_FREE( zone->org );
+      FT_FREE( zone->orus );
+
+      zone->max_points   = zone->n_points   = 0;
+      zone->max_contours = zone->n_contours = 0;
+      zone->memory       = NULL;
+    }
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+patch: @@ -1212,10 +1212,14 @@
+     FT_Size_Metrics*  metrics;
+ 
+ 
+-    size->ttmetrics.valid = FALSE;
+-
+     face = (TT_Face)size->root.face;
+ 
++    /* nothing to do for CFF2 */
++    if ( face->isCFF2 )
++      return FT_Err_Ok;
++
++    size->ttmetrics.valid = FALSE;
++
+     metrics = &size->metrics;
+ 
+     /* copy the result from base layer */
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+vul: 0
+vul_func_with_fix:   tt_glyphzone_done( TT_GlyphZone  zone )
+  {
+    FT_Memory  memory = zone->memory;
+
+
+    if ( memory )
+    {
+      FT_FREE( zone->contours );
+      FT_FREE( zone->tags );
+      FT_FREE( zone->cur );
+      FT_FREE( zone->org );
+      FT_FREE( zone->orus );
+
+      zone->max_points   = zone->n_points   = 0;
+      zone->max_contours = zone->n_contours = 0;
+      zone->memory       = NULL;
+    }
+  }
+
+
+========================================
+
+Entry ID: 7516
+: 7516
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-7864
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-7864/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-14
+Score: 7.5
+Summary: FreeType 2 before 2017-02-02 has an out-of-bounds write caused by a heap-based buffer overflow related to the tt_size_reset function in truetype/ttobjs.c.
+Update Date: 2017-06-30
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_id: e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   tt_glyphzone_new( FT_Memory     memory,
+                    FT_UShort     maxPoints,
+                    FT_Short      maxContours,
+                    TT_GlyphZone  zone )
+  {
+    FT_Error  error;
+
+
+    FT_ZERO( zone );
+    zone->memory = memory;
+
+    if ( FT_NEW_ARRAY( zone->org,      maxPoints   ) ||
+         FT_NEW_ARRAY( zone->cur,      maxPoints   ) ||
+         FT_NEW_ARRAY( zone->orus,     maxPoints   ) ||
+         FT_NEW_ARRAY( zone->tags,     maxPoints   ) ||
+         FT_NEW_ARRAY( zone->contours, maxContours ) )
+    {
+      tt_glyphzone_done( zone );
+    }
+    else
+    {
+      zone->max_points   = maxPoints;
+      zone->max_contours = maxContours;
+    }
+
+    return error;
+  }
+
+func_before:   tt_glyphzone_new( FT_Memory     memory,
+                    FT_UShort     maxPoints,
+                    FT_Short      maxContours,
+                    TT_GlyphZone  zone )
+  {
+    FT_Error  error;
+
+
+    FT_ZERO( zone );
+    zone->memory = memory;
+
+    if ( FT_NEW_ARRAY( zone->org,      maxPoints   ) ||
+         FT_NEW_ARRAY( zone->cur,      maxPoints   ) ||
+         FT_NEW_ARRAY( zone->orus,     maxPoints   ) ||
+         FT_NEW_ARRAY( zone->tags,     maxPoints   ) ||
+         FT_NEW_ARRAY( zone->contours, maxContours ) )
+    {
+      tt_glyphzone_done( zone );
+    }
+    else
+    {
+      zone->max_points   = maxPoints;
+      zone->max_contours = maxContours;
+    }
+
+    return error;
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+patch: @@ -1212,10 +1212,14 @@
+     FT_Size_Metrics*  metrics;
+ 
+ 
+-    size->ttmetrics.valid = FALSE;
+-
+     face = (TT_Face)size->root.face;
+ 
++    /* nothing to do for CFF2 */
++    if ( face->isCFF2 )
++      return FT_Err_Ok;
++
++    size->ttmetrics.valid = FALSE;
++
+     metrics = &size->metrics;
+ 
+     /* copy the result from base layer */
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+vul: 0
+vul_func_with_fix:   tt_glyphzone_new( FT_Memory     memory,
+                    FT_UShort     maxPoints,
+                    FT_Short      maxContours,
+                    TT_GlyphZone  zone )
+  {
+    FT_Error  error;
+
+
+    FT_ZERO( zone );
+    zone->memory = memory;
+
+    if ( FT_NEW_ARRAY( zone->org,      maxPoints   ) ||
+         FT_NEW_ARRAY( zone->cur,      maxPoints   ) ||
+         FT_NEW_ARRAY( zone->orus,     maxPoints   ) ||
+         FT_NEW_ARRAY( zone->tags,     maxPoints   ) ||
+         FT_NEW_ARRAY( zone->contours, maxContours ) )
+    {
+      tt_glyphzone_done( zone );
+    }
+    else
+    {
+      zone->max_points   = maxPoints;
+      zone->max_contours = maxContours;
+    }
+
+    return error;
+  }
+
+
+========================================
+
+Entry ID: 7517
+: 7517
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-7864
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-7864/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-14
+Score: 7.5
+Summary: FreeType 2 before 2017-02-02 has an out-of-bounds write caused by a heap-based buffer overflow related to the tt_size_reset function in truetype/ttobjs.c.
+Update Date: 2017-06-30
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_id: e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   tt_size_done( FT_Size  ttsize )           /* TT_Size */
+  {
+    TT_Size  size = (TT_Size)ttsize;
+
+
+#ifdef TT_USE_BYTECODE_INTERPRETER
+    tt_size_done_bytecode( ttsize );
+#endif
+
+    size->ttmetrics.valid = FALSE;
+  }
+
+func_before:   tt_size_done( FT_Size  ttsize )           /* TT_Size */
+  {
+    TT_Size  size = (TT_Size)ttsize;
+
+
+#ifdef TT_USE_BYTECODE_INTERPRETER
+    tt_size_done_bytecode( ttsize );
+#endif
+
+    size->ttmetrics.valid = FALSE;
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+patch: @@ -1212,10 +1212,14 @@
+     FT_Size_Metrics*  metrics;
+ 
+ 
+-    size->ttmetrics.valid = FALSE;
+-
+     face = (TT_Face)size->root.face;
+ 
++    /* nothing to do for CFF2 */
++    if ( face->isCFF2 )
++      return FT_Err_Ok;
++
++    size->ttmetrics.valid = FALSE;
++
+     metrics = &size->metrics;
+ 
+     /* copy the result from base layer */
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+vul: 0
+vul_func_with_fix:   tt_size_done( FT_Size  ttsize )           /* TT_Size */
+  {
+    TT_Size  size = (TT_Size)ttsize;
+
+
+#ifdef TT_USE_BYTECODE_INTERPRETER
+    tt_size_done_bytecode( ttsize );
+#endif
+
+    size->ttmetrics.valid = FALSE;
+  }
+
+
+========================================
+
+Entry ID: 7518
+: 7518
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-7864
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-7864/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-14
+Score: 7.5
+Summary: FreeType 2 before 2017-02-02 has an out-of-bounds write caused by a heap-based buffer overflow related to the tt_size_reset function in truetype/ttobjs.c.
+Update Date: 2017-06-30
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_id: e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   tt_size_done_bytecode( FT_Size  ftsize )
+  {
+    TT_Size    size   = (TT_Size)ftsize;
+    TT_Face    face   = (TT_Face)ftsize->face;
+    FT_Memory  memory = face->root.memory;
+
+    if ( size->context )
+    {
+      TT_Done_Context( size->context );
+      size->context = NULL;
+    }
+
+    FT_FREE( size->cvt );
+    size->cvt_size = 0;
+
+    /* free storage area */
+    FT_FREE( size->storage );
+    size->storage_size = 0;
+
+    /* twilight zone */
+    tt_glyphzone_done( &size->twilight );
+
+    FT_FREE( size->function_defs );
+    FT_FREE( size->instruction_defs );
+
+    size->num_function_defs    = 0;
+    size->max_function_defs    = 0;
+    size->num_instruction_defs = 0;
+    size->max_instruction_defs = 0;
+
+    size->max_func = 0;
+    size->max_ins  = 0;
+
+    size->bytecode_ready = -1;
+    size->cvt_ready      = -1;
+  }
+
+func_before:   tt_size_done_bytecode( FT_Size  ftsize )
+  {
+    TT_Size    size   = (TT_Size)ftsize;
+    TT_Face    face   = (TT_Face)ftsize->face;
+    FT_Memory  memory = face->root.memory;
+
+    if ( size->context )
+    {
+      TT_Done_Context( size->context );
+      size->context = NULL;
+    }
+
+    FT_FREE( size->cvt );
+    size->cvt_size = 0;
+
+    /* free storage area */
+    FT_FREE( size->storage );
+    size->storage_size = 0;
+
+    /* twilight zone */
+    tt_glyphzone_done( &size->twilight );
+
+    FT_FREE( size->function_defs );
+    FT_FREE( size->instruction_defs );
+
+    size->num_function_defs    = 0;
+    size->max_function_defs    = 0;
+    size->num_instruction_defs = 0;
+    size->max_instruction_defs = 0;
+
+    size->max_func = 0;
+    size->max_ins  = 0;
+
+    size->bytecode_ready = -1;
+    size->cvt_ready      = -1;
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+patch: @@ -1212,10 +1212,14 @@
+     FT_Size_Metrics*  metrics;
+ 
+ 
+-    size->ttmetrics.valid = FALSE;
+-
+     face = (TT_Face)size->root.face;
+ 
++    /* nothing to do for CFF2 */
++    if ( face->isCFF2 )
++      return FT_Err_Ok;
++
++    size->ttmetrics.valid = FALSE;
++
+     metrics = &size->metrics;
+ 
+     /* copy the result from base layer */
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+vul: 0
+vul_func_with_fix:   tt_size_done_bytecode( FT_Size  ftsize )
+  {
+    TT_Size    size   = (TT_Size)ftsize;
+    TT_Face    face   = (TT_Face)ftsize->face;
+    FT_Memory  memory = face->root.memory;
+
+    if ( size->context )
+    {
+      TT_Done_Context( size->context );
+      size->context = NULL;
+    }
+
+    FT_FREE( size->cvt );
+    size->cvt_size = 0;
+
+    /* free storage area */
+    FT_FREE( size->storage );
+    size->storage_size = 0;
+
+    /* twilight zone */
+    tt_glyphzone_done( &size->twilight );
+
+    FT_FREE( size->function_defs );
+    FT_FREE( size->instruction_defs );
+
+    size->num_function_defs    = 0;
+    size->max_function_defs    = 0;
+    size->num_instruction_defs = 0;
+    size->max_instruction_defs = 0;
+
+    size->max_func = 0;
+    size->max_ins  = 0;
+
+    size->bytecode_ready = -1;
+    size->cvt_ready      = -1;
+  }
+
+
+========================================
+
+Entry ID: 7519
+: 7519
+Access Gained: None
+Attack Origin: Remote
+Authentication Required: Not required
+Availability: Partial
+CVE ID: CVE-2017-7864
+CVE Page: https://www.cvedetails.com/cve/CVE-2017-7864/
+CWE ID: CWE-787
+Complexity: Low
+Confidentiality: Partial
+Integrity: Partial
+Known Exploits: 
+Publish Date: 2017-04-14
+Score: 7.5
+Summary: FreeType 2 before 2017-02-02 has an out-of-bounds write caused by a heap-based buffer overflow related to the tt_size_reset function in truetype/ttobjs.c.
+Update Date: 2017-06-30
+Vulnerability Classification: Overflow
+add_lines: 0
+codeLink: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_id: e6699596af5c5d6f0ae0ea06e19df87dce088df8
+commit_message: 
+del_lines: 0
+file_name: 
+files_changed: 
+func_after:   tt_size_init( FT_Size  ttsize )           /* TT_Size */
+  {
+    TT_Size   size  = (TT_Size)ttsize;
+    FT_Error  error = FT_Err_Ok;
+
+
+#ifdef TT_USE_BYTECODE_INTERPRETER
+    size->bytecode_ready = -1;
+    size->cvt_ready      = -1;
+#endif
+
+    size->ttmetrics.valid = FALSE;
+    size->strike_index    = 0xFFFFFFFFUL;
+
+    return error;
+  }
+
+func_before:   tt_size_init( FT_Size  ttsize )           /* TT_Size */
+  {
+    TT_Size   size  = (TT_Size)ttsize;
+    FT_Error  error = FT_Err_Ok;
+
+
+#ifdef TT_USE_BYTECODE_INTERPRETER
+    size->bytecode_ready = -1;
+    size->cvt_ready      = -1;
+#endif
+
+    size->ttmetrics.valid = FALSE;
+    size->strike_index    = 0xFFFFFFFFUL;
+
+    return error;
+  }
+
+lang: C
+lines_after: 
+lines_before: 
+parentID: dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+patch: @@ -1212,10 +1212,14 @@
+     FT_Size_Metrics*  metrics;
+ 
+ 
+-    size->ttmetrics.valid = FALSE;
+-
+     face = (TT_Face)size->root.face;
+ 
++    /* nothing to do for CFF2 */
++    if ( face->isCFF2 )
++      return FT_Err_Ok;
++
++    size->ttmetrics.valid = FALSE;
++
+     metrics = &size->metrics;
+ 
+     /* copy the result from base layer */
+project: savannah
+project_after: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=e6699596af5c5d6f0ae0ea06e19df87dce088df8
+project_before: https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/src/truetype/ttobjs.c?id=dadc50a4679c74ead5a283dd48a4164bc4a27cdd
+vul: 0
+vul_func_with_fix:   tt_size_init( FT_Size  ttsize )           /* TT_Size */
+  {
+    TT_Size   size  = (TT_Size)ttsize;
+    FT_Error  error = FT_Err_Ok;
+
+
+#ifdef TT_USE_BYTECODE_INTERPRETER
+    size->bytecode_ready = -1;
+    size->cvt_ready      = -1;
+#endif
+
+    size->ttmetrics.valid = FALSE;
+    size->strike_index    = 0xFFFFFFFFUL;
+
+    return error;
+  }
+
+
+========================================
+
